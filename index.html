@@ -6,59 +6,71 @@
     <title>For Sejal | Level 21 Unlocked</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        :root { --primary: #ff69b4; --secondary: #ffd700; --accent: #ff1493; }
-        body { margin: 0; padding: 0; background: #fffafb; font-family: 'Arial Rounded MT Bold', sans-serif; height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        :root { --primary: #ff69b4; --secondary: #ffd700; --accent: #ff1493; --background: #fff0f3; }
+        body { margin: 0; padding: 0; background: var(--background); font-family: 'Arial Rounded MT Bold', sans-serif; height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; }
 
         /* General Container */
-        .container { position: relative; width: 90%; max-width: 450px; background: white; padding: 40px; border-radius: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border: 3px solid #ffe6eb; text-align: center; z-index: 100; }
+        .container { position: relative; width: 90%; max-width: 450px; background: white; padding: 30px; border-radius: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border: 3px solid #ffe6eb; text-align: center; z-index: 100; opacity: 0; transition: opacity 0.5s; }
 
-        /* Stage 1: Balloon Pop Game */
+        /* Floating Background of drifting hearts */
+        .background-heart { position: absolute; font-size: 1.5rem; opacity: 0.1; animation: drift 10s infinite linear; }
+        @keyframes drift { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-100vh) rotate(360deg); } }
+
+        /* STAGE 1: The Balloon Harvest */
         #stage1 { display: flex; flex-direction: column; align-items: center; }
-        .balloon { position: absolute; font-size: 3rem; cursor: pointer; transition: transform 0.3s; animation: float 5s infinite ease-in-out; }
-        @keyframes float { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-15px) rotate(10deg); } }
-        .balloon:hover { transform: scale(1.1); }
+        .target { font-size: 1.2rem; color: #555; background: #ffe6eb; padding: 10px 20px; border-radius: 20px; margin-bottom: 20px; }
+        .balloon { position: absolute; font-size: 3rem; cursor: pointer; transition: transform 0.3s; }
         .popped { animation: pop 0.4s ease-out; opacity: 0; }
         @keyframes pop { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
-        #popCount { color: #888; font-size: 0.9rem; margin-top: 10px; }
 
-        /* Stage 2: Cake Blowout */
-        #stage2 { display: none; flex-direction: column; align-items: center; }
-        .cake { font-size: 100px; cursor: pointer; transition: 0.3s; }
-        .cake:hover { transform: scale(1.05); }
-        .candles { font-size: 2rem; color: var(--accent); animation: flicker 1s infinite alternate; }
-        @keyframes flicker { 0% { opacity: 1; } 100% { opacity: 0.5; } }
-        .blow { font-size: 1.2rem; color: #555; background: #ffe6eb; padding: 10px 20px; border-radius: 20px; margin-top: 15px; }
-
-        /* Stage 3: The Grand Finale */
-        #stage3 { display: none; }
-        .headline { color: #d63384; font-size: 2.2rem; margin-bottom: 5px; }
-        .sub { color: #888; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        /* STAGE 2: The Cake Drop */
+        #stage2 { display: none; }
+        .hbd-banner { position: absolute; top: 0; width: 100%; text-align: center; font-size: 2rem; color: #ff69b4; animation: drop-banner 1s ease-out; }
+        @keyframes drop-banner { 0% { top: -50px; } 100% { top: 0; } }
         
+        .falling-cake { position: absolute; font-size: 120px; opacity: 0; transform: translateY(-100vh); }
+        @keyframes fall-cake {
+            0% { transform: translateY(-100vh); opacity: 0; }
+            80% { transform: translateY(10vh); opacity: 1; } /* Fall past target slightly */
+            100% { transform: translateY(0); opacity: 1; } /* Bounce into place */
+        }
+        .candles-on { font-size: 2rem; color: var(--accent); animation: flicker 0.8s infinite alternate; cursor: pointer; }
+        @keyframes flicker { 0% { opacity: 1; } 100% { opacity: 0.5; } }
+        .blow { font-size: 1.1rem; color: #555; margin-top: 10px; }
+
+        /* STAGE 3: The Grand Finale */
+        #stage3 { display: none; }
+        .headline { color: #d63384; font-size: 2rem; margin-bottom: 5px; }
+        .sub { color: #888; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; }
         .memory-scroll { height: 160px; overflow-y: auto; margin: 20px 0; padding: 10px; border-top: 2px solid #ffe6eb; border-bottom: 2px solid #ffe6eb; font-style: italic; color: #444; line-height: 1.6; }
         .highlight { color: #ff69b4; font-weight: bold; }
-        
         .btn-finale { background: var(--accent); color: white; border: none; padding: 12px 30px; border-radius: 50px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px; }
         .btn-finale:hover { background: #d63384; transform: scale(1.05); }
+
+        /* Utility Class for showing containers */
+        .show { opacity: 1; }
     </style>
 </head>
 <body>
 
-    <div id="stage1" class="container">
-        <h1 style="color: #ff69b4;">Sejal, Let's Play! 🎈</h1>
-        <p>You need to clear the balloons for your surprise!</p>
-        <p id="popCount">Balloons Popped: 0 / 10</p>
-        </div>
+    <div id="stage1" class="container show">
+        <h1 style="color: #ff69b4;">Sejal, Let's Celebrate! 🎁</h1>
+        <p class="target">You need to catch all 7 falling balloons to unlock your surprise!</p>
+        <p id="catchCount">Balloons Caught: 0 / 7</p>
+    </div>
 
     <div id="stage2" class="container">
-        <div class="candles" id="candleLit">🔥🎂🔥</div>
-        <div class="cake" id="candleOut" style="display:none;">🎂</div>
-        <h1 style="color: #ff69b4;">Level 21 Unlocked!</h1>
-        <p class="blow">Quick! Tap the cake to blow out the candles!</p>
+        <div class="hbd-banner">🎂 LEVEL 21 🎂</div>
+        <div class="falling-cake" id="fallingCake">
+            <div class="candles-on" id="candlesLit">🔥🎂🔥</div>
+            <div class="cake-plain" id="candlesOut" style="display:none;">🎂</div>
+        </div>
+        <p class="blow">Quick! Tap the cake to blow out the 21 candles!</p>
     </div>
 
     <div id="stage3" class="container">
-        <h1 class="headline">🎉 HAPPY 21st! 🎉</h1>
-        <p class="sub">Sejal | Born: 2005</p>
+        <h1 class="headline">🎉 HAPPY BIRTHDAY, SEJAL! 🎉</h1>
+        <p class="sub">Level 21 | Born: 2005</p>
         <div class="memory-scroll">
             <p>"Everything started from that <span class="highlight">DTSI class</span> back on 19-Oct-2023..."</p>
             <p>"From a stranger to the person who gives me <span class="highlight">Eka alag heee peace</span>."</p>
@@ -72,75 +84,124 @@
     </div>
 
     <script>
+        // BACKGROUND DRIFTING HEARTS (Dynamic)
+        function createHearts() {
+            for(let i=0; i<15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'background-heart';
+                heart.innerHTML = Math.random() > 0.5 ? '💖' : '🎈';
+                heart.style.left = `${Math.random()*100}vw`;
+                heart.style.top = `${Math.random()*100}vh`;
+                heart.style.animationDelay = `${Math.random()*5}s`;
+                heart.style.fontSize = `${Math.random()*1 + 1}rem`;
+                document.body.appendChild(heart);
+            }
+        }
+        createHearts();
+
         // STAGE 1: Balloon Logic
-        let poppedCount = 0;
-        const totalBalloons = 10;
-        const balloons = ["🎈", "🎈", "💖", "🎈", "✨", "🎈", "🎈", "💖", "🎈", "✨"];
+        let caughtCount = 0;
+        const totalBalloons = 7;
+        const balloonSymbols = ["🎈", "🎈", "💖", "🎈", "✨", "🎈", "🎈"];
         
         function addBalloons() {
-            const container = document.getElementById('stage1');
             for(let i=0; i<totalBalloons; i++) {
                 const b = document.createElement('div');
                 b.className = 'balloon';
-                b.innerHTML = balloons[i];
-                b.style.top = `${Math.random()*60 + 20}%`;
-                b.style.left = `${Math.random()*80 + 10}%`;
-                b.style.animationDelay = `${Math.random()*3}s`;
-                b.onclick = () => popBalloon(b);
-                document.body.appendChild(b); // Put balloons ON BODY, not in container
+                b.innerHTML = balloonSymbols[i];
+                b.style.top = `-10vh`;
+                b.style.left = `${Math.random()*80 + 10}vw`;
+                // Balloons are on body for full screen effect
+                document.body.appendChild(b);
+                // Animate them falling from top to bottom
+                animateBalloon(b, i);
             }
         }
         addBalloons();
 
-        function popBalloon(b) {
+        function animateBalloon(b, index) {
+            // Speed up slightly as they fall
+            const duration = Math.random()*3 + 4; 
+            const delay = Math.random()*3;
+            b.animate([
+                { transform: 'translateY(0vh)' },
+                { transform: 'translateY(110vh)' } // Fall past bottom
+            ], {
+                duration: duration * 1000,
+                delay: delay * 1000,
+                iterations: Infinity,
+                easing: 'linear'
+            });
+            b.onclick = () => catchBalloon(b, index);
+        }
+
+        function catchBalloon(b, index) {
             b.classList.add('popped');
-            poppedCount++;
-            document.getElementById('popCount').innerText = `Balloons Popped: ${poppedCount} / ${totalBalloons}`;
-            if(poppedCount === totalBalloons) {
-                // All balloons popped! Move to Stage 2
+            caughtCount++;
+            document.getElementById('catchCount').innerText = `Balloons Caught: ${caughtCount} / ${totalBalloons}`;
+            if(caughtCount === totalBalloons) {
+                // All balloons caught! Move to Stage 2
                 setTimeout(() => {
                     document.getElementById('stage1').style.display = 'none';
-                    document.getElementById('stage2').style.display = 'flex';
-                    // Need to remove balloons from DOM after animation
+                    startStage2();
+                    // Need to remove balloons from DOM
                     document.querySelectorAll('.balloon').forEach(el => el.remove());
                 }, 600);
             }
         }
 
-        // STAGE 2: Cake Logic
-        document.getElementById('stage2').onclick = blowCandles;
+        // STAGE 2: The Cake Drop Logic
+        function startStage2() {
+            document.getElementById('stage2').style.display = 'block';
+            document.getElementById('stage2').classList.add('show');
+            
+            // Trigger the Cake Drop Animation
+            const cake = document.getElementById('fallingCake');
+            cake.style.animation = 'fall-cake 1.5s ease-out forwards';
+            cake.style.opacity = '1';
+        }
+
+        // STAGE 2: Candle Blowing Logic
+        document.getElementById('candlesLit').onclick = blowCandles;
         
         function blowCandles() {
-            document.getElementById('candleLit').style.display = 'none';
-            document.getElementById('candleOut').style.display = 'block';
-            document.getElementById('stage2').onclick = null; // Prevent double clicking
+            // Candles out
+            document.getElementById('candlesLit').style.display = 'none';
+            document.getElementById('candlesOut').style.display = 'block';
+            document.getElementById('candlesLit').onclick = null; // Prevent double clicking
+            
+            // Background becomes shimmer
+            document.body.style.background = 'linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%)';
+            document.body.style.animation = 'rainbow 3s infinite';
+            
             // Confetti Blast and move to Finale
             fullBlast();
             setTimeout(() => {
                 document.getElementById('stage2').style.display = 'none';
                 document.getElementById('stage3').style.display = 'block';
+                document.getElementById('stage3').classList.add('show');
             }, 1000);
         }
 
-        // Confetti "Blasting Papers" Function
+        // Confetti "Blasting Papers" Function (Massive multi-cannon)
         function fullBlast() {
-            // Left Cannon
+            // Left Cannon (Bottom corner)
             confetti({
-                particleCount: 100, spread: 70, origin: { x: 0, y: 0.6 },
-                colors: ['#ff758c', '#ffd700', '#ffffff']
+                particleCount: 150, spread: 80, origin: { x: 0, y: 0.9 },
+                colors: ['#ff758c', '#ffd700', '#ffffff', '#ff1493']
             });
-            // Right Cannon
+            // Right Cannon (Bottom corner)
             confetti({
-                particleCount: 100, spread: 70, origin: { x: 1, y: 0.6 },
-                colors: ['#ff758c', '#ffd700', '#ffffff']
+                particleCount: 150, spread: 80, origin: { x: 1, y: 0.9 },
+                colors: ['#ff758c', '#ffd700', '#ffffff', '#ff1493']
             });
-            // Center big explosion
+            // Center huge explosion (slightly delayed)
             setTimeout(() => {
                 confetti({
-                    particleCount: 150, spread: 100, origin: { y: 0.5 },
-                    colors: ['#ffffff', '#ff1493', '#ffd700']
+                    particleCount: 200, spread: 120, origin: { y: 0.5 },
+                    colors: ['#ffffff', '#ff1493', '#ffd700', '#00f2fe']
                 });
-            }, 500);
+            }, 600);
         }
 
         function celebrateAgain() {
