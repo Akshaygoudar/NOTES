@@ -3,209 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Sejal | Level 21 Unlocked</title>
+    <title>Happy Birthday Sejal! 🐾</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        :root { --primary: #ff69b4; --secondary: #ffd700; --accent: #ff1493; --background: #fff0f3; }
-        body { margin: 0; padding: 0; background: var(--background); font-family: 'Arial Rounded MT Bold', sans-serif; height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; }
-
-        /* General Container */
-        .container { position: relative; width: 90%; max-width: 450px; background: white; padding: 30px; border-radius: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border: 3px solid #ffe6eb; text-align: center; z-index: 100; opacity: 0; transition: opacity 0.5s; }
-
-        /* Floating Background of drifting hearts */
-        .background-heart { position: absolute; font-size: 1.5rem; opacity: 0.1; animation: drift 10s infinite linear; }
-        @keyframes drift { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-100vh) rotate(360deg); } }
-
-        /* STAGE 1: The Balloon Harvest */
-        #stage1 { display: flex; flex-direction: column; align-items: center; }
-        .target { font-size: 1.2rem; color: #555; background: #ffe6eb; padding: 10px 20px; border-radius: 20px; margin-bottom: 20px; }
-        .balloon { position: absolute; font-size: 3rem; cursor: pointer; transition: transform 0.3s; }
-        .popped { animation: pop 0.4s ease-out; opacity: 0; }
-        @keyframes pop { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
-
-        /* STAGE 2: The Cake Drop */
-        #stage2 { display: none; }
-        .hbd-banner { position: absolute; top: 0; width: 100%; text-align: center; font-size: 2rem; color: #ff69b4; animation: drop-banner 1s ease-out; }
-        @keyframes drop-banner { 0% { top: -50px; } 100% { top: 0; } }
+        :root { --p: #ff69b4; --bg: #fff0f5; }
+        body { margin: 0; background: var(--bg); font-family: 'Arial Rounded MT Bold', sans-serif; height: 100vh; overflow: hidden; display: flex; justify-content: center; align-items: center; }
         
-        .falling-cake { position: absolute; font-size: 120px; opacity: 0; transform: translateY(-100vh); }
-        @keyframes fall-cake {
-            0% { transform: translateY(-100vh); opacity: 0; }
-            80% { transform: translateY(10vh); opacity: 1; } /* Fall past target slightly */
-            100% { transform: translateY(0); opacity: 1; } /* Bounce into place */
-        }
-        .candles-on { font-size: 2rem; color: var(--accent); animation: flicker 0.8s infinite alternate; cursor: pointer; }
-        @keyframes flicker { 0% { opacity: 1; } 100% { opacity: 0.5; } }
-        .blow { font-size: 1.1rem; color: #555; margin-top: 10px; }
+        .game-container { position: relative; width: 85%; max-width: 450px; background: white; padding: 30px; border-radius: 30px; box-shadow: 0 15px 50px rgba(0,0,0,0.1); text-align: center; z-index: 10; border: 5px solid #ffdae9; }
+        
+        /* The Falling Cake Animation */
+        #fallingCake { font-size: 100px; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); z-index: 100; pointer-events: none; }
 
-        /* STAGE 3: The Grand Finale */
-        #stage3 { display: none; }
-        .headline { color: #d63384; font-size: 2rem; margin-bottom: 5px; }
-        .sub { color: #888; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; }
-        .memory-scroll { height: 160px; overflow-y: auto; margin: 20px 0; padding: 10px; border-top: 2px solid #ffe6eb; border-bottom: 2px solid #ffe6eb; font-style: italic; color: #444; line-height: 1.6; }
-        .highlight { color: #ff69b4; font-weight: bold; }
-        .btn-finale { background: var(--accent); color: white; border: none; padding: 12px 30px; border-radius: 50px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px; }
-        .btn-finale:hover { background: #d63384; transform: scale(1.05); }
+        .item { position: absolute; font-size: 2.5rem; cursor: pointer; user-select: none; z-index: 5; }
+        .label { font-size: 0.8rem; background: white; padding: 2px 8px; border-radius: 10px; border: 1px solid #ffdae9; display: block; margin-top: -5px; color: #d63384; font-weight: bold; }
 
-        /* Utility Class for showing containers */
-        .show { opacity: 1; }
+        .hidden { display: none; }
+        .btn { background: var(--p); color: white; border: none; padding: 15px 35px; border-radius: 50px; font-size: 1.2rem; cursor: pointer; transition: 0.3s; margin-top: 20px; box-shadow: 0 5px 15px rgba(255,105,180,0.3); }
+        .btn:hover { transform: scale(1.1); background: #ff1493; }
+
+        #progress { font-size: 1.1rem; color: #d63384; margin-bottom: 15px; }
+        .cake-box { cursor: pointer; transition: transform 0.2s; }
+        .cake-box:hover { transform: scale(1.1); }
     </style>
 </head>
 <body>
 
-    <div id="stage1" class="container show">
-        <h1 style="color: #ff69b4;">Sejal, Let's Celebrate! 🎁</h1>
-        <p class="target">You need to catch all 7 falling balloons to unlock your surprise!</p>
-        <p id="catchCount">Balloons Caught: 0 / 7</p>
+    <div id="screen1" class="game-container">
+        <h1 style="color: var(--p);">Hey Sejal! 🎉</h1>
+        <p>Everyone is waiting for the party to start!</p>
+        <p style="font-size: 0.9rem; color: #888;">Tap to invite your favorites to the celebration...</p>
+        <button class="btn" onclick="startGame()">Start the Parade!</button>
     </div>
 
-    <div id="stage2" class="container">
-        <div class="hbd-banner">🎂 LEVEL 21 🎂</div>
-        <div class="falling-cake" id="fallingCake">
-            <div class="candles-on" id="candlesLit">🔥🎂🔥</div>
-            <div class="cake-plain" id="candlesOut" style="display:none;">🎂</div>
-        </div>
-        <p class="blow">Quick! Tap the cake to blow out the 21 candles!</p>
+    <div id="screen2" class="game-container hidden">
+        <div id="progress">Invited: 0 / 15</div>
+        <p style="color: #aaa; font-size: 0.8rem;">Tap the Dogs, Cats, and Family to invite them!</p>
     </div>
 
-    <div id="stage3" class="container">
-        <h1 class="headline">🎉 HAPPY BIRTHDAY, SEJAL! 🎉</h1>
-        <p class="sub">Level 21 | Born: 2005</p>
-        <div class="memory-scroll">
-            <p>"Everything started from that <span class="highlight">DTSI class</span> back on 19-Oct-2023..."</p>
-            <p>"From a stranger to the person who gives me <span class="highlight">Eka alag heee peace</span>."</p>
-            <p>"The unique 'Pigeon' who stands out in every crowd."</p>
-            <p>"Thank you for the Tuesday fruits and the care."</p>
-            <p>"I'm so grateful for our journey, wherever it leads."</p>
-            <p>"Thank you for the honor of being your friend."</p>
+    <div id="screen3" class="game-container hidden">
+        <div id="fallingCake">🎂</div>
+        <div class="cake-box" id="cakeAction">
+            <h1 style="color: var(--p);">THE CAKE IS HERE!</h1>
+            <p>Tap the 21 candles to blow them out!</p>
+            <div style="font-size: 80px;" id="cakeEmoji">🔥🎂🔥</div>
         </div>
-        <p style="font-weight:bold; color:#ff69b4; margin-top:20px;">~ Akshay (Butterfly)</p>
-        <button class="btn-finale" onclick="celebrateAgain()">Blast Again! 🎊</button>
+    </div>
+
+    <div id="screen4" class="game-container hidden">
+        <h1 style="color: var(--p);">Happy Birthday Sejal! 🎉</h1>
+        <p style="font-size: 1.1rem;">I hope your day is as amazing as your family and pets!</p>
+        <hr style="border: 1px dashed #ffdae9; margin: 20px 0;">
+        <p style="color: #555;">May you have a <b>Bug-Free</b> and <b>Joyful</b> 21st year.</p>
+        <p style="font-weight: bold; color: var(--p);">~ From Akshay</p>
+        <button class="btn" style="font-size: 0.9rem;" onclick="finalBlast()">Blast Papers Again! 🎊</button>
     </div>
 
     <script>
-        // BACKGROUND DRIFTING HEARTS (Dynamic)
-        function createHearts() {
-            for(let i=0; i<15; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'background-heart';
-                heart.innerHTML = Math.random() > 0.5 ? '💖' : '🎈';
-                heart.style.left = `${Math.random()*100}vw`;
-                heart.style.top = `${Math.random()*100}vh`;
-                heart.style.animationDelay = `${Math.random()*5}s`;
-                heart.style.fontSize = `${Math.random()*1 + 1}rem`;
-                document.body.appendChild(heart);
-            }
-        }
-        createHearts();
+        const favorites = [
+            {icon: '🐕', name: 'Dogs'}, {icon: '🐈', name: 'Cats'}, 
+            {icon: '👩‍🦰', name: 'Sister'}, {icon: '👨', name: 'Dad'}, 
+            {icon: '👩', name: 'Mom'}, {icon: '🐶', name: 'Dogs'},
+            {icon: '🐱', name: 'Cats'}, {icon: '👩‍👧‍👧', name: 'Family'}
+        ];
 
-        // STAGE 1: Balloon Logic
-        let caughtCount = 0;
-        const totalBalloons = 7;
-        const balloonSymbols = ["🎈", "🎈", "💖", "🎈", "✨", "🎈", "🎈"];
-        
-        function addBalloons() {
-            for(let i=0; i<totalBalloons; i++) {
-                const b = document.createElement('div');
-                b.className = 'balloon';
-                b.innerHTML = balloonSymbols[i];
-                b.style.top = `-10vh`;
-                b.style.left = `${Math.random()*80 + 10}vw`;
-                // Balloons are on body for full screen effect
-                document.body.appendChild(b);
-                // Animate them falling from top to bottom
-                animateBalloon(b, i);
-            }
-        }
-        addBalloons();
+        let count = 0;
+        const targetCount = 15;
 
-        function animateBalloon(b, index) {
-            // Speed up slightly as they fall
-            const duration = Math.random()*3 + 4; 
-            const delay = Math.random()*3;
-            b.animate([
-                { transform: 'translateY(0vh)' },
-                { transform: 'translateY(110vh)' } // Fall past bottom
-            ], {
-                duration: duration * 1000,
-                delay: delay * 1000,
-                iterations: Infinity,
-                easing: 'linear'
-            });
-            b.onclick = () => catchBalloon(b, index);
+        function startGame() {
+            document.getElementById('screen1').classList.add('hidden');
+            document.getElementById('screen2').classList.remove('hidden');
+            spawnParade();
         }
 
-        function catchBalloon(b, index) {
-            b.classList.add('popped');
-            caughtCount++;
-            document.getElementById('catchCount').innerText = `Balloons Caught: ${caughtCount} / ${totalBalloons}`;
-            if(caughtCount === totalBalloons) {
-                // All balloons caught! Move to Stage 2
-                setTimeout(() => {
-                    document.getElementById('stage1').style.display = 'none';
-                    startStage2();
-                    // Need to remove balloons from DOM
-                    document.querySelectorAll('.balloon').forEach(el => el.remove());
-                }, 600);
-            }
+        function spawnParade() {
+            const interval = setInterval(() => {
+                if (count >= targetCount) {
+                    clearInterval(interval);
+                    setTimeout(dropCake, 1000);
+                    return;
+                }
+                createItem();
+            }, 800);
         }
 
-        // STAGE 2: The Cake Drop Logic
-        function startStage2() {
-            document.getElementById('stage2').style.display = 'block';
-            document.getElementById('stage2').classList.add('show');
-            
-            // Trigger the Cake Drop Animation
+        function createItem() {
+            const data = favorites[Math.floor(Math.random() * favorites.length)];
+            const div = document.createElement('div');
+            div.className = 'item';
+            div.innerHTML = `${data.icon}<span class="label">${data.name}</span>`;
+            div.style.left = Math.random() * 80 + 10 + 'vw';
+            div.style.top = '-100px';
+            document.body.appendChild(div);
+
+            const anim = div.animate([
+                { top: '-100px', transform: 'rotate(0deg)' },
+                { top: '110vh', transform: 'rotate(360deg)' }
+            ], { duration: 5000, easing: 'linear' });
+
+            div.onclick = () => {
+                count++;
+                document.getElementById('progress').innerText = `Invited: ${count} / ${targetCount}`;
+                div.style.transform = 'scale(2)';
+                div.style.opacity = '0';
+                setTimeout(() => div.remove(), 200);
+                // Mini blast on each tap
+                confetti({ particleCount: 10, spread: 30, origin: { x: event.clientX/window.innerWidth, y: event.clientY/window.innerHeight } });
+            };
+
+            anim.onfinish = () => div.remove();
+        }
+
+        function dropCake() {
+            document.getElementById('screen2').classList.add('hidden');
+            document.getElementById('screen3').classList.remove('hidden');
             const cake = document.getElementById('fallingCake');
-            cake.style.animation = 'fall-cake 1.5s ease-out forwards';
-            cake.style.opacity = '1';
+            setTimeout(() => {
+                cake.style.top = '10%'; // Cake drops to the top of the container area
+            }, 100);
         }
 
-        // STAGE 2: Candle Blowing Logic
-        document.getElementById('candlesLit').onclick = blowCandles;
-        
-        function blowCandles() {
-            // Candles out
-            document.getElementById('candlesLit').style.display = 'none';
-            document.getElementById('candlesOut').style.display = 'block';
-            document.getElementById('candlesLit').onclick = null; // Prevent double clicking
-            
-            // Background becomes shimmer
-            document.body.style.background = 'linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%)';
-            document.body.style.animation = 'rainbow 3s infinite';
-            
-            // Confetti Blast and move to Finale
-            fullBlast();
+        document.getElementById('cakeAction').onclick = () => {
+            document.getElementById('cakeEmoji').innerHTML = '🎂';
+            finalBlast();
             setTimeout(() => {
-                document.getElementById('stage2').style.display = 'none';
-                document.getElementById('stage3').style.display = 'block';
-                document.getElementById('stage3').classList.add('show');
+                document.getElementById('screen3').classList.add('hidden');
+                document.getElementById('screen4').classList.remove('hidden');
             }, 1000);
-        }
+        };
 
-        // Confetti "Blasting Papers" Function (Massive multi-cannon)
-        function fullBlast() {
-            // Left Cannon (Bottom corner)
-            confetti({
-                particleCount: 150, spread: 80, origin: { x: 0, y: 0.9 },
-                colors: ['#ff758c', '#ffd700', '#ffffff', '#ff1493']
-            });
-            // Right Cannon (Bottom corner)
-            confetti({
-                particleCount: 150, spread: 80, origin: { x: 1, y: 0.9 },
-                colors: ['#ff758c', '#ffd700', '#ffffff', '#ff1493']
-            });
-            // Center huge explosion (slightly delayed)
-            setTimeout(() => {
-                confetti({
-                    particleCount: 200, spread: 120, origin: { y: 0.5 },
-                    colors: ['#ffffff', '#ff1493', '#ffd700', '#00f2fe']
-                });
-            }, 600);
-        }
+        function finalBlast() {
+            const end = Date.now() + 3000;
+            const colors = ['#ff69b4', '#ffd700', '#ffffff'];
 
-        function celebrateAgain() {
-            fullBlast();
+            (function frame() {
+                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: colors });
+                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: colors });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         }
     </script>
 </body>
