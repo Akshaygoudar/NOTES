@@ -3,156 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Happy Birthday Sejal! 🐾</title>
+    <title>For Sejal | Memory Garden | 21</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        :root { --p: #ff69b4; --bg: #fff0f5; }
-        body { margin: 0; background: var(--bg); font-family: 'Arial Rounded MT Bold', sans-serif; height: 100vh; overflow: hidden; touch-action: manipulation; }
+        :root { --p: #ff69b4; --s: #70d6ff; --bg: #fff0f5; }
+        body { margin: 0; padding: 0; font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif; height: 100vh; overflow: hidden; background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); touch-action: none; }
         
-        .game-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; max-width: 400px; background: white; padding: 30px; border-radius: 30px; box-shadow: 0 15px 50px rgba(0,0,0,0.1); text-align: center; z-index: 100; border: 5px solid #ffdae9; }
+        .garden-container { position: relative; width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; z-index: 10; }
         
-        /* The Falling Cake Animation */
-        #fallingCake { font-size: 100px; position: absolute; top: -250px; left: 50%; transform: translateX(-50%); z-index: 1000; transition: top 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        /* The UI Glass Panel */
+        .glass-panel { position: absolute; top: 10%; left: 50%; transform: translateX(-50%); width: 85%; max-width: 400px; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border-radius: 25px; border: 2px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 20px; text-align: center; z-index: 200; transition: opacity 0.5s; }
+        h1 { color: #d63384; font-size: 2.2rem; margin: 0; }
+        p { color: #888; margin: 10px 0; font-size: 0.95rem; }
+        
+        /* The Magical Garden Elements */
+        #soil { position: absolute; bottom: 0; width: 100%; height: 20%; background: #decfbe; border-top: 10px solid #decfbe; border-radius: 50% 50% 0 0; }
+        #magicalPlant { position: absolute; bottom: 15%; left: 50%; transform: translateX(-50%); width: 10px; height: 0px; background: #66cc66; transition: height 0.3s; z-index: 20; }
+        .blossom { position: absolute; font-size: 2.5rem; transition: transform 0.3s; cursor: pointer; opacity: 0; transform: scale(0); }
+        .popped { transform: scale(1); opacity: 1; }
 
-        /* Bigger, easier-to-click items */
-        .item { 
-            position: absolute; 
-            font-size: 3.5rem; 
-            cursor: pointer; 
-            z-index: 50; 
-            padding: 20px; /* This makes the clickable area much larger */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .label { font-size: 0.9rem; background: var(--p); color: white; padding: 2px 10px; border-radius: 12px; margin-top: -5px; font-weight: bold; pointer-events: none; }
+        /* General Buttons/Controls */
+        .btn { background: var(--p); color: white; border: none; padding: 12px 30px; border-radius: 50px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px; }
+        .btn:hover { background: #d63384; transform: scale(1.05); }
+        .hidden { display: none; opacity: 0; pointer-events: none; }
+        .show { display: block; opacity: 1; pointer-events: auto; }
 
-        .hidden { display: none; }
-        .btn { background: var(--p); color: white; border: none; padding: 18px 40px; border-radius: 50px; font-size: 1.3rem; cursor: pointer; transition: 0.3s; margin-top: 20px; box-shadow: 0 5px 15px rgba(255,105,180,0.3); }
-        
-        #progress { font-size: 1.4rem; color: #d63384; font-weight: bold; margin-bottom: 10px; }
-        .cake-emoji { font-size: 100px; cursor: pointer; display: block; margin: 20px auto; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        /* The Finale Scroll Area */
+        .scroll-panel { height: 200px; overflow-y: auto; background: #fffafb; padding: 15px; border-radius: 15px; border: 1px dashed var(--p); text-align: left; font-size: 0.95rem; line-height: 1.6; color: #444; margin-bottom: 20px; }
+        .highlight { color: var(--p); font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div id="screen1" class="game-container">
-        <h1 style="color: var(--p);">Hey Sejal! 🎉</h1>
-        <p>Your favorites are arriving for the party!</p>
-        <p style="color: #888;">Tap 15 to start the celebration!</p>
-        <button class="btn" onclick="startGame()">Start Parade!</button>
-    </div>
-
-    <div id="screen2" class="game-container hidden">
-        <div id="progress">Invited: 0 / 15</div>
-        <p style="color: #888; font-size: 0.9rem;">Tap the Dogs, Cats, and Family!</p>
-    </div>
-
-    <div id="screen3" class="game-container hidden">
-        <div id="fallingCake">🎂</div>
-        <div id="cakeAction">
-            <h1 style="color: var(--p);">CAKE TIME!</h1>
-            <p>Tap the cake to blow the candles!</p>
-            <div class="cake-emoji" id="cakeEmoji">🔥🎂🔥</div>
+    <div id="uiPanel" class="glass-panel">
+        <h1 id="headline">Memory Garden</h1>
+        <p id="subtext">"Everyone has a garden of time. Let's make yours bloom for your 21st."</p>
+        
+        <div id="instruction1">
+            <p>Rub the soil to plant the seed...</p>
+        </div>
+        
+        <div id="instruction2" class="hidden">
+            <p style="color:var(--s);">A magic water cloud is attached to your finger!</p>
+            <p>Water the plant to unlock the 21 memory blossoms (Dogs, Cats & Family!)</p>
+            <div id="progress" style="font-size: 1.4rem; font-weight: bold; color:var(--p);">0 / 21</div>
         </div>
     </div>
 
-    <div id="screen4" class="game-container hidden">
-        <h1 style="color: var(--p);">Happy Birthday, Sejal! 🎉</h1>
-        <p>I hope your 21st is full of love from your <b>Dogs, Cats, and Family!</b></p>
-        <div style="background: #fff0f5; padding: 15px; border-radius: 15px; margin: 15px 0; font-style: italic; color: #444;">
-            "Everything started from that DTSI class... thank you for the memories."
+    <div class="garden-container">
+        <div id="soil"></div>
+        <div id="magicalPlant"></div>
         </div>
-        <p style="font-weight: bold; color: var(--p);">~ From Akshay</p>
-        <button class="btn" onclick="finalBlast()">Blast Papers! 🎊</button>
+
+    <div id="uiCake" class="glass-panel hidden">
+        <h1>CAKE DROP!</h1>
+        <p>Your tree has provided a gift...</p>
+        <div style="font-size: 100px; cursor: pointer; margin: 15px;" id="cakeEmoji">🔥🎂🔥</div>
+        <p style="color: #aaa; font-size: 0.8rem;">(Tap to blow the candles)</p>
+    </div>
+
+    <div id="uiFinale" class="glass-panel hidden">
+        <h1>Happy Birthday, Sejal! 🎉</h1>
+        <p style="color: #888; font-size: 0.8rem;">LEVEL 21 | EST. 2005</p>
+        <div class="scroll-panel" id="finalMessages">
+            <p style="background:#ffe6eb; border-radius:10px; padding:10px; color:#d63384;">Everything started from that <span class="highlight">DTSI class</span>...</p>
+        </div>
+        <p style="font-weight: bold; color: var(--p);">~ From Akshay (Butterfly)</p>
+        <button class="btn" style="font-size: 0.9rem;" onclick="finalBlast()">Blast Papers! 🎊</button>
     </div>
 
     <script>
-        const favorites = [
-            {i: '🐕', n: 'Dog'}, {i: '🐈', n: 'Cat'}, {i: '👩‍🦰', n: 'Sister'}, 
-            {i: '👨', n: 'Dad'}, {i: '👩', n: 'Mom'}, {i: '🐶', n: 'Puppy'}, 
-            {i: '🐱', n: 'Kitty'}, {i: '💖', n: 'Family'}
+        const story = [
+            " Strangers  Friends (DTSI)", " Tuesday Fruit Reminders!", " Your dedication to studies (clearing C!).", " 'Pigeon' in the crowd.", " That calm, intelligent mind.", " You do what your heart says.", " I will always be rooting for your success.", " Thank you for the memory of us.", " Forgiving my past mistakes.", " Peace in our small chats."
         ];
+        const gardenSymbols = ["🐕","🐈","👨","👩","👩‍🦰","🐶","🐱","🌸","✨","💖","🎂","🐕","🐈","👩‍🦰","✨"];
 
-        let count = 0;
-        const targetCount = 15;
+        // STAGE 1: SOIL RUBBING LOGIC
+        let planted = false;
+        let rubProgress = 0;
+        document.getElementById('soil').addEventListener('touchmove', (e) => {
+            if(planted) return;
+            rubProgress++;
+            if(rubProgress > 100) {
+                planted = true;
+                plantSeed();
+            }
+        });
 
-        function startGame() {
-            document.getElementById('screen1').classList.add('hidden');
-            document.getElementById('screen2').classList.remove('hidden');
-            spawnItems();
+        function plantSeed() {
+            document.getElementById('instruction1').classList.add('hidden');
+            const plant = document.getElementById('magicalPlant');
+            plant.style.height = '100px';
+            setTimeout(startWatering, 600);
         }
 
-        function spawnItems() {
-            const timer = setInterval(() => {
-                if (count >= targetCount) {
-                    clearInterval(timer);
-                    setTimeout(dropCake, 800);
-                    return;
+        // STAGE 2: WATERING LOGIC
+        let blossomsCreated = 0;
+        let plantHeight = 100;
+
+        function startWatering() {
+            document.getElementById('instruction2').classList.remove('hidden');
+            // Attach water particle logic to body
+            document.body.addEventListener('touchstart', waterHandler);
+            document.body.addEventListener('touchmove', waterHandler);
+        }
+
+        const waterHandler = (e) => {
+            if(blossomsCreated >= 21) return;
+            e.preventDefault();
+            const touch = e.touches[0];
+            // Particle effect
+            createWaterParticle(touch.pageX, touch.pageY);
+            growPlant();
+        }
+
+        function createWaterParticle(x, y) {
+            const p = document.createElement('div');
+            p.innerHTML = "💧";
+            p.style.position = 'absolute';
+            p.style.left = `${x}px`; p.style.top = `${y}px`;
+            p.style.fontSize = '1rem'; p.style.color = '#70d6ff'; p.style.zIndex = '5';
+            document.body.appendChild(p);
+            p.animate([{opacity: 1}, {opacity: 0, transform: 'translateY(100px)'}], 1000).onfinish = () => p.remove();
+        }
+
+        let growthMeter = 0;
+        function growPlant() {
+            growthMeter++;
+            if(growthMeter % 10 === 0) {
+                if(blossomsCreated < 21) {
+                    blossomsCreated++;
+                    document.getElementById('progress').innerText = `${blossomsCreated} / 21`;
+                    plantHeight += 10;
+                    document.getElementById('magicalPlant').style.height = `${plantHeight}px`;
+                    spawnBlossom();
+                    if(blossomsCreated === 21) finishGarden();
                 }
-                createItem();
-            }, 900);
+            }
         }
 
-        function createItem() {
-            const data = favorites[Math.floor(Math.random() * favorites.length)];
-            const div = document.createElement('div');
-            div.className = 'item';
-            div.innerHTML = `${data.i}<span class="label">${data.n}</span>`;
-            
-            // Random horizontal position
-            div.style.left = Math.random() * 70 + 5 + 'vw';
-            div.style.top = '-120px';
-            document.body.appendChild(div);
-
-            // Slower animation for easier clicking
-            const anim = div.animate([
-                { top: '-120px' },
-                { top: '110vh' }
-            ], { duration: 6000, easing: 'linear' });
-
-            // ENHANCED CLICK LOGIC
-            const handleTouch = (e) => {
-                e.preventDefault(); // Prevents zoom/scroll
-                count++;
-                document.getElementById('progress').innerText = `Invited: ${count} / ${targetCount}`;
-                
-                // Visual feedback
-                div.style.transform = 'scale(1.5)';
-                div.style.opacity = '0';
-                confetti({ particleCount: 15, spread: 40, origin: { x: e.clientX/window.innerWidth || 0.5, y: e.clientY/window.innerHeight || 0.5 } });
-                
-                setTimeout(() => div.remove(), 200);
-            };
-
-            div.addEventListener('mousedown', handleTouch);
-            div.addEventListener('touchstart', handleTouch);
-
-            anim.onfinish = () => div.remove();
+        function spawnBlossom() {
+            const b = document.createElement('div');
+            b.className = 'blossom popped';
+            b.innerHTML = gardenSymbols[Math.floor(Math.random()*gardenSymbols.length)];
+            const plantRect = document.getElementById('magicalPlant').getBoundingClientRect();
+            // Attach blossom to the plant area
+            b.style.left = `${Math.random()*200 - 100 + plantRect.left + (plantRect.width/2)}px`;
+            b.style.bottom = `${Math.random()* (plantHeight - 50) + 15 + 50}%`;
+            document.querySelector('.garden-container').appendChild(b);
+            // Mini blast
+            confetti({ particleCount: 5, spread: 20, origin: { x: (Math.random()*0.4 + 0.3), y: (Math.random()*0.3 + 0.5) } });
         }
 
-        function dropCake() {
-            document.getElementById('screen2').classList.add('hidden');
-            document.getElementById('screen3').classList.remove('hidden');
-            setTimeout(() => {
-                document.getElementById('fallingCake').style.top = '15%';
-            }, 100);
+        function finishGarden() {
+            document.getElementById('uiPanel').classList.add('hidden');
+            setTimeout(cakeDrop, 1000);
         }
 
+        // STAGE 3: CAKE DROP (The idea you liked!)
+        function cakeDrop() {
+            document.getElementById('uiCake').classList.remove('hidden');
+            document.getElementById('uiCake').classList.add('show');
+            // Your custom logic to trigger the falling cake visual at top
+        }
+
+        // STAGE 4: CAKE BLOWOUT
         document.getElementById('cakeEmoji').onclick = () => {
             document.getElementById('cakeEmoji').innerHTML = '🎂';
             finalBlast();
-            setTimeout(() => {
-                document.getElementById('screen3').classList.add('hidden');
-                document.getElementById('screen4').classList.remove('hidden');
-            }, 1000);
-        };
+            setTimeout(showFinale, 1500);
+        }
+
+        // STAGE 5: FINALE SCROLL
+        function showFinale() {
+            document.getElementById('uiCake').classList.add('hidden');
+            document.getElementById('uiFinale').classList.remove('hidden');
+            document.getElementById('uiFinale').classList.add('show');
+            
+            // Story Scroll Logic
+            const area = document.getElementById('finalMessages');
+            story.forEach((m, i) => {
+                setTimeout(() => {
+                    area.innerHTML += `<p>> ${m}</p>`;
+                    area.scrollTop = area.scrollHeight;
+                }, (i + 1) * 3500); // Lines appear every 3.5 seconds for deep reading
+            });
+        }
 
         function finalBlast() {
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            confetti({ particleCount: 100, angle: 60, spread: 55, origin: { x: 0 } });
-            confetti({ particleCount: 100, angle: 120, spread: 55, origin: { x: 1 } });
         }
     </script>
 </body>
