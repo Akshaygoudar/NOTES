@@ -2,68 +2,77 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Happy Birthday Sejal! 🐾</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root { --p: #ff69b4; --bg: #fff0f5; }
-        body { margin: 0; background: var(--bg); font-family: 'Arial Rounded MT Bold', sans-serif; height: 100vh; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+        body { margin: 0; background: var(--bg); font-family: 'Arial Rounded MT Bold', sans-serif; height: 100vh; overflow: hidden; touch-action: manipulation; }
         
-        .game-container { position: relative; width: 85%; max-width: 450px; background: white; padding: 30px; border-radius: 30px; box-shadow: 0 15px 50px rgba(0,0,0,0.1); text-align: center; z-index: 10; border: 5px solid #ffdae9; }
+        .game-container { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; max-width: 400px; background: white; padding: 30px; border-radius: 30px; box-shadow: 0 15px 50px rgba(0,0,0,0.1); text-align: center; z-index: 100; border: 5px solid #ffdae9; }
         
         /* The Falling Cake Animation */
-        #fallingCake { font-size: 100px; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); z-index: 100; pointer-events: none; }
+        #fallingCake { font-size: 100px; position: absolute; top: -250px; left: 50%; transform: translateX(-50%); z-index: 1000; transition: top 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
-        .item { position: absolute; font-size: 2.5rem; cursor: pointer; user-select: none; z-index: 5; }
-        .label { font-size: 0.8rem; background: white; padding: 2px 8px; border-radius: 10px; border: 1px solid #ffdae9; display: block; margin-top: -5px; color: #d63384; font-weight: bold; }
+        /* Bigger, easier-to-click items */
+        .item { 
+            position: absolute; 
+            font-size: 3.5rem; 
+            cursor: pointer; 
+            z-index: 50; 
+            padding: 20px; /* This makes the clickable area much larger */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .label { font-size: 0.9rem; background: var(--p); color: white; padding: 2px 10px; border-radius: 12px; margin-top: -5px; font-weight: bold; pointer-events: none; }
 
         .hidden { display: none; }
-        .btn { background: var(--p); color: white; border: none; padding: 15px 35px; border-radius: 50px; font-size: 1.2rem; cursor: pointer; transition: 0.3s; margin-top: 20px; box-shadow: 0 5px 15px rgba(255,105,180,0.3); }
-        .btn:hover { transform: scale(1.1); background: #ff1493; }
-
-        #progress { font-size: 1.1rem; color: #d63384; margin-bottom: 15px; }
-        .cake-box { cursor: pointer; transition: transform 0.2s; }
-        .cake-box:hover { transform: scale(1.1); }
+        .btn { background: var(--p); color: white; border: none; padding: 18px 40px; border-radius: 50px; font-size: 1.3rem; cursor: pointer; transition: 0.3s; margin-top: 20px; box-shadow: 0 5px 15px rgba(255,105,180,0.3); }
+        
+        #progress { font-size: 1.4rem; color: #d63384; font-weight: bold; margin-bottom: 10px; }
+        .cake-emoji { font-size: 100px; cursor: pointer; display: block; margin: 20px auto; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
     </style>
 </head>
 <body>
 
     <div id="screen1" class="game-container">
         <h1 style="color: var(--p);">Hey Sejal! 🎉</h1>
-        <p>Everyone is waiting for the party to start!</p>
-        <p style="font-size: 0.9rem; color: #888;">Tap to invite your favorites to the celebration...</p>
-        <button class="btn" onclick="startGame()">Start the Parade!</button>
+        <p>Your favorites are arriving for the party!</p>
+        <p style="color: #888;">Tap 15 to start the celebration!</p>
+        <button class="btn" onclick="startGame()">Start Parade!</button>
     </div>
 
     <div id="screen2" class="game-container hidden">
         <div id="progress">Invited: 0 / 15</div>
-        <p style="color: #aaa; font-size: 0.8rem;">Tap the Dogs, Cats, and Family to invite them!</p>
+        <p style="color: #888; font-size: 0.9rem;">Tap the Dogs, Cats, and Family!</p>
     </div>
 
     <div id="screen3" class="game-container hidden">
         <div id="fallingCake">🎂</div>
-        <div class="cake-box" id="cakeAction">
-            <h1 style="color: var(--p);">THE CAKE IS HERE!</h1>
-            <p>Tap the 21 candles to blow them out!</p>
-            <div style="font-size: 80px;" id="cakeEmoji">🔥🎂🔥</div>
+        <div id="cakeAction">
+            <h1 style="color: var(--p);">CAKE TIME!</h1>
+            <p>Tap the cake to blow the candles!</p>
+            <div class="cake-emoji" id="cakeEmoji">🔥🎂🔥</div>
         </div>
     </div>
 
     <div id="screen4" class="game-container hidden">
-        <h1 style="color: var(--p);">Happy Birthday Sejal! 🎉</h1>
-        <p style="font-size: 1.1rem;">I hope your day is as amazing as your family and pets!</p>
-        <hr style="border: 1px dashed #ffdae9; margin: 20px 0;">
-        <p style="color: #555;">May you have a <b>Bug-Free</b> and <b>Joyful</b> 21st year.</p>
+        <h1 style="color: var(--p);">Happy Birthday, Sejal! 🎉</h1>
+        <p>I hope your 21st is full of love from your <b>Dogs, Cats, and Family!</b></p>
+        <div style="background: #fff0f5; padding: 15px; border-radius: 15px; margin: 15px 0; font-style: italic; color: #444;">
+            "Everything started from that DTSI class... thank you for the memories."
+        </div>
         <p style="font-weight: bold; color: var(--p);">~ From Akshay</p>
-        <button class="btn" style="font-size: 0.9rem;" onclick="finalBlast()">Blast Papers Again! 🎊</button>
+        <button class="btn" onclick="finalBlast()">Blast Papers! 🎊</button>
     </div>
 
     <script>
         const favorites = [
-            {icon: '🐕', name: 'Dogs'}, {icon: '🐈', name: 'Cats'}, 
-            {icon: '👩‍🦰', name: 'Sister'}, {icon: '👨', name: 'Dad'}, 
-            {icon: '👩', name: 'Mom'}, {icon: '🐶', name: 'Dogs'},
-            {icon: '🐱', name: 'Cats'}, {icon: '👩‍👧‍👧', name: 'Family'}
+            {i: '🐕', n: 'Dog'}, {i: '🐈', n: 'Cat'}, {i: '👩‍🦰', n: 'Sister'}, 
+            {i: '👨', n: 'Dad'}, {i: '👩', n: 'Mom'}, {i: '🐶', n: 'Puppy'}, 
+            {i: '🐱', n: 'Kitty'}, {i: '💖', n: 'Family'}
         ];
 
         let count = 0;
@@ -72,43 +81,53 @@
         function startGame() {
             document.getElementById('screen1').classList.add('hidden');
             document.getElementById('screen2').classList.remove('hidden');
-            spawnParade();
+            spawnItems();
         }
 
-        function spawnParade() {
-            const interval = setInterval(() => {
+        function spawnItems() {
+            const timer = setInterval(() => {
                 if (count >= targetCount) {
-                    clearInterval(interval);
-                    setTimeout(dropCake, 1000);
+                    clearInterval(timer);
+                    setTimeout(dropCake, 800);
                     return;
                 }
                 createItem();
-            }, 800);
+            }, 900);
         }
 
         function createItem() {
             const data = favorites[Math.floor(Math.random() * favorites.length)];
             const div = document.createElement('div');
             div.className = 'item';
-            div.innerHTML = `${data.icon}<span class="label">${data.name}</span>`;
-            div.style.left = Math.random() * 80 + 10 + 'vw';
-            div.style.top = '-100px';
+            div.innerHTML = `${data.i}<span class="label">${data.n}</span>`;
+            
+            // Random horizontal position
+            div.style.left = Math.random() * 70 + 5 + 'vw';
+            div.style.top = '-120px';
             document.body.appendChild(div);
 
+            // Slower animation for easier clicking
             const anim = div.animate([
-                { top: '-100px', transform: 'rotate(0deg)' },
-                { top: '110vh', transform: 'rotate(360deg)' }
-            ], { duration: 5000, easing: 'linear' });
+                { top: '-120px' },
+                { top: '110vh' }
+            ], { duration: 6000, easing: 'linear' });
 
-            div.onclick = () => {
+            // ENHANCED CLICK LOGIC
+            const handleTouch = (e) => {
+                e.preventDefault(); // Prevents zoom/scroll
                 count++;
                 document.getElementById('progress').innerText = `Invited: ${count} / ${targetCount}`;
-                div.style.transform = 'scale(2)';
+                
+                // Visual feedback
+                div.style.transform = 'scale(1.5)';
                 div.style.opacity = '0';
+                confetti({ particleCount: 15, spread: 40, origin: { x: e.clientX/window.innerWidth || 0.5, y: e.clientY/window.innerHeight || 0.5 } });
+                
                 setTimeout(() => div.remove(), 200);
-                // Mini blast on each tap
-                confetti({ particleCount: 10, spread: 30, origin: { x: event.clientX/window.innerWidth, y: event.clientY/window.innerHeight } });
             };
+
+            div.addEventListener('mousedown', handleTouch);
+            div.addEventListener('touchstart', handleTouch);
 
             anim.onfinish = () => div.remove();
         }
@@ -116,13 +135,12 @@
         function dropCake() {
             document.getElementById('screen2').classList.add('hidden');
             document.getElementById('screen3').classList.remove('hidden');
-            const cake = document.getElementById('fallingCake');
             setTimeout(() => {
-                cake.style.top = '10%'; // Cake drops to the top of the container area
+                document.getElementById('fallingCake').style.top = '15%';
             }, 100);
         }
 
-        document.getElementById('cakeAction').onclick = () => {
+        document.getElementById('cakeEmoji').onclick = () => {
             document.getElementById('cakeEmoji').innerHTML = '🎂';
             finalBlast();
             setTimeout(() => {
@@ -132,15 +150,9 @@
         };
 
         function finalBlast() {
-            const end = Date.now() + 3000;
-            const colors = ['#ff69b4', '#ffd700', '#ffffff'];
-
-            (function frame() {
-                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: colors });
-                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: colors });
-                if (Date.now() < end) requestAnimationFrame(frame);
-            }());
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            confetti({ particleCount: 100, angle: 60, spread: 55, origin: { x: 0 } });
+            confetti({ particleCount: 100, angle: 120, spread: 55, origin: { x: 1 } });
         }
     </script>
 </body>
