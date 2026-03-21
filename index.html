@@ -2,155 +2,123 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>For Sejal | 21 Memories</title>
+    <title>S_E_J_A_L_21.exe</title>
     <style>
-        body {
-            background-color: #0d1117;
-            color: #58a6ff;
-            font-family: 'Courier New', Courier, monospace;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
+        body { background: #000; margin: 0; overflow: hidden; font-family: 'Courier New', monospace; color: #0f0; }
+        canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; opacity: 0.3; }
+        
+        .ui-layer {
+            position: relative; z-index: 2; height: 100vh; display: flex;
+            justify-content: center; align-items: center; flex-direction: column;
         }
-        .container {
-            text-align: center;
-            border: 1px solid #30363d;
-            padding: 40px;
-            border-radius: 15px;
-            background: #161b22;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.7);
-            width: 85%;
-            max-width: 500px;
-            min-height: 350px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+
+        .terminal {
+            background: rgba(0, 20, 0, 0.9); border: 2px solid #0f0;
+            padding: 30px; border-radius: 10px; box-shadow: 0 0 20px #0f0;
+            max-width: 500px; text-align: center;
         }
-        .reason-text {
-            font-size: 1.2rem;
-            color: #c9d1d9;
-            line-height: 1.6;
-            margin: 20px 0;
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .counter {
-            color: #8b949e;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .button-container {
-            display: flex;
-            justify-content: flex-end; /* Pushes button to the right */
-            width: 100%;
-        }
+
+        .cursor { display: inline-block; width: 10px; height: 20px; background: #0f0; animation: blink 1s infinite; }
+        @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+
         button {
-            background: #238636;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            font-family: 'Courier New', monospace;
-            transition: 0.3s;
+            background: transparent; color: #0f0; border: 1px solid #0f0;
+            padding: 10px 20px; cursor: pointer; font-family: inherit;
+            margin-top: 20px; transition: 0.3s;
         }
-        button:hover { background: #2ea043; transform: scale(1.05); }
+        button:hover { background: #0f0; color: #000; box-shadow: 0 0 15px #0f0; }
+
         .hidden { display: none; }
-        .highlight { color: #f0883e; }
+        .bday-msg { font-size: 2rem; text-shadow: 0 0 10px #0f0; color: #fff; }
     </style>
 </head>
 <body>
 
-    <div id="page1" class="container">
-        <div>
-            <h1 style="color: #f0883e;">🎉 Happy Birthday Sejal 🎉</h1>
-            <p style="color: #8b949e;">[Born: 2005 | Level: 21]</p>
-        </div>
-        <p>> I have compiled 21 special things from my heart...</p>
-        <div class="button-container">
-            <button onclick="startReasons()">Decrypt Memories_</button>
-        </div>
+<canvas id="matrix"></canvas>
+
+<div class="ui-layer">
+    <div id="screen1" class="terminal">
+        <p>> system.initialize("SEJAL_2005")</p>
+        <p>> checking_friendship_status...</p>
+        <p>> [OK]</p>
+        <button onclick="startHack()">EXECUTE SURPRISE.exe</button>
     </div>
 
-    <div id="page2" class="container hidden">
-        <div class="counter" id="counter">Memory 1 of 21</div>
-        <div class="reason-text" id="reasonDisplay"></div>
-        <div class="button-container">
-            <button id="nextBtn" onclick="nextReason()">Next Thing →</button>
-        </div>
+    <div id="screen2" class="terminal hidden">
+        <p id="hackText"></p>
+        <span class="cursor"></span>
     </div>
 
-    <div id="page3" class="container hidden">
-        <h1 class="highlight">Stepping into 22...</h1>
-        <p>I hope this year brings you endless joy, success, and beautiful moments.</p>
-        <p style="color: #c9d1d9;">Whether it's our deep conversations or just our daily talks, I'm forever grateful for your presence.</p>
-        <hr style="border: 0.5px solid #30363d; width: 100%;">
-        <h3>Thank you for being my best friend, Sejal. ❤️</h3>
-        <p style="font-size: 0.8rem; color: #8b949e;">~ With love, Akshay (Butterfly)</p>
+    <div id="screen3" class="terminal hidden">
+        <h1 class="bday-msg">🎉 HAPPY BIRTHDAY SEJAL! 🎉</h1>
+        <p>> Age: 20.0 (Incrementing to 21...)</p>
+        <p>> Location: Far Away (Connection: Strong)</p>
+        <p>> Thank you for being the 'Pigeon' in this world of 'Crows'.</p>
+        <hr style="border-color: #0f0;">
+        <p>Wishing you 100% Code Accuracy and 0% Life Bugs this year!</p>
+        <p>- From Akshay</p>
     </div>
+</div>
 
-    <script>
-        const reasons = [
-            "Do u remember when our journey started??? Yeahhh It was  19-OCT-2023,The day our journey took it's first step!" 
-            "Everything started from that DTSI class.... That day I got ur Mom's number,then u texted me saying Can u Plz add this number to our grouppp???.",
-            "From that clingy first meet in our DTSI class to now, you've become the most important person in my life.",
-            "You are kindest,dearest, purest, and rarest person I hv ever met in my life. 💎",
-            "I miss you more than the sky misses the sun at night.",
-            "I can weigh you alone on one side of a weighing balance and the rest of my friends on the other side.",
-            "Talking to you, even for a few minutes, gives me a different kind of peace ('Ek alag hee peace').",
-            "You hold an irreplaceable space in my heart and I can't imagine my life without you.",
-            "You are a 'complete package' a guy could ask for.",
-            "I'm forever grateful to God for sending you into my life.",
-            "Your friendship is a treasure that I cherish every single day.",
-            "Whenever I talk with you or be with you, I feel so much happiness.",
-            "No matter how my day was, talking to you changes my whole mood.",
-            "You literally mean the whole world to me.",
-            "I love you more than you think... more than any person who loves you.",
-            "Thank you for believing in me, trusting me, and nourishing this friendship.",
-            "You have a special and giant room in my heart which cannot be replaced by anyone.",
-            "Don't ever think I will get irritated by you or leave you—that's never gonna happen.",
-            "Thank you for forgiving me for all the mistakes I have made. I'm forever grateful for that.",
-            "You are the best thing that has ever happened to me.",
-            "I am so much lucky and blessed to have you in my life.",
-            "You have been the best part of my journey. I'm always and forever by your side."
-        ];
+<script>
+    // Matrix Background Effect
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-        let currentIndex = 0;
+    const chars = "01SEJAL2005<>(){}+-*";
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
 
-        function startReasons() {
-            document.getElementById('page1').classList.add('hidden');
-            document.getElementById('page2').classList.remove('hidden');
-            updateDisplay();
-        }
+    function drawMatrix() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#0f0";
+        ctx.font = fontSize + "px monospace";
 
-        function updateDisplay() {
-            document.getElementById('counter').innerText = `Memory ${currentIndex + 1} of 21`;
-            document.getElementById('reasonDisplay').innerText = reasons[currentIndex];
-            if (currentIndex === reasons.length - 1) {
-                document.getElementById('nextBtn').innerText = "Final Wish";
-            }
-        }
+        drops.forEach((y, i) => {
+            const text = chars[Math.floor(Math.random() * chars.length)];
+            ctx.fillText(text, i * fontSize, y * fontSize);
+            if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        });
+    }
+    setInterval(drawMatrix, 35);
 
-        function nextReason() {
-            if (currentIndex < reasons.length - 1) {
-                currentIndex++;
-                updateDisplay();
+    // Hacking Animation
+    const hackLines = [
+        "> Bypassing firewall...",
+        "> Searching for memories...",
+        "> Loading DTSI_Class_19Oct.log...",
+        "> Finding Tuesday_Fruits_Module...",
+        "> Cleaning all friendship_bugs...",
+        "> ACCESS GRANTED."
+    ];
+
+    function startHack() {
+        document.getElementById('screen1').classList.add('hidden');
+        document.getElementById('screen2').classList.remove('hidden');
+        let i = 0;
+        let lineIdx = 0;
+        const target = document.getElementById('hackText');
+
+        function type() {
+            if (lineIdx < hackLines.length) {
+                target.innerHTML += hackLines[lineIdx] + "<br>";
+                lineIdx++;
+                setTimeout(type, 800);
             } else {
-                showFinalPage();
+                setTimeout(() => {
+                    document.getElementById('screen2').classList.add('hidden');
+                    document.getElementById('screen3').classList.remove('hidden');
+                }, 1000);
             }
         }
+        type();
+    }
+</script>
 
-        function showFinalPage() {
-            document.getElementById('page2').classList.add('hidden');
-            document.getElementById('page3').classList.remove('hidden');
-        }
-    </script>
 </body>
 </html>
