@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Happy Birthday Sejal!</title>
+    <title>For Sejal | 21 Memories</title>
     <style>
         body {
             background-color: #0d1117;
@@ -19,109 +19,134 @@
             text-align: center;
             border: 1px solid #30363d;
             padding: 40px;
-            border-radius: 10px;
+            border-radius: 15px;
             background: #161b22;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            max-width: 600px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+            width: 85%;
+            max-width: 500px;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .reason-text {
+            font-size: 1.2rem;
+            color: #c9d1d9;
+            line-height: 1.6;
+            margin: 20px 0;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .counter {
+            color: #8b949e;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: flex-end; /* Pushes button to the right */
+            width: 100%;
         }
         button {
             background: #238636;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
-            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+            transition: 0.3s;
         }
-        button:hover { background: #2ea043; }
+        button:hover { background: #2ea043; transform: scale(1.05); }
         .hidden { display: none; }
-        .list-container {
-            text-align: left;
-            max-height: 300px;
-            overflow-y: auto;
-            margin-top: 20px;
-            padding-right: 10px;
-        }
-        .reason {
-            opacity: 0;
-            transform: translateX(-10px);
-            transition: all 0.5s;
-            margin-bottom: 8px;
-            color: #c9d1d9;
-        }
-        .show-reason { opacity: 1; transform: translateX(0); }
+        .highlight { color: #f0883e; }
     </style>
 </head>
 <body>
 
     <div id="page1" class="container">
-        <h1>🎉 Happy Birthday Sejal 🎉</h1>
-        <p>> system.initialize("Surprise_Mode")</p>
-        <p>Welcome to your dedicated server, Sejal.</p>
-        <button onclick="showPage2()">Click to continue_</button>
+        <div>
+            <h1 style="color: #f0883e;">🎉 Happy Birthday Sejal 🎉</h1>
+            <p style="color: #8b949e;">[Born: 2005 | Level: 21]</p>
+        </div>
+        <p>> I have compiled 21 special things from my heart...</p>
+        <div class="button-container">
+            <button onclick="startReasons()">Decrypt Memories_</button>
+        </div>
     </div>
 
     <div id="page2" class="container hidden">
-        <h2>21 Things That Make Sejal Special</h2>
-        <div id="reasonsBox" class="list-container">
-            </div>
-        <button id="nextBtn" class="hidden" onclick="showPage3()">Proceed to Final Step</button>
+        <div class="counter" id="counter">Memory 1 of 21</div>
+        <div class="reason-text" id="reasonDisplay"></div>
+        <div class="button-container">
+            <button id="nextBtn" onclick="nextReason()">Next Thing →</button>
+        </div>
     </div>
 
     <div id="page3" class="container hidden">
-        <h1>Stepping into 22...</h1>
-        <p style="color: #ff7b72;">I hope this year gives you everything you dream about.</p>
-        <hr style="border: 0.5px solid #30363d;">
-        <h3>Thank you for being my best friend.</h3>
-        <p><i>- End of Script -</i></p>
+        <h1 class="highlight">Stepping into 22...</h1>
+        <p>I hope this year brings you endless joy, success, and beautiful moments.</p>
+        <p style="color: #c9d1d9;">Whether it's our deep conversations or just our daily talks, I'm forever grateful for your presence.</p>
+        <hr style="border: 0.5px solid #30363d; width: 100%;">
+        <h3>Thank you for being my best friend, Sejal. ❤️</h3>
+        <p style="font-size: 0.8rem; color: #8b949e;">~ With love, Akshay (Butterfly)</p>
     </div>
 
     <script>
         const reasons = [
-            "Your smile makes people comfortable",
-            "You always support your friends",
-            "You are strong even in difficult situations",
-            "You work hard for your dreams",
-            "Your kindness is your superpower",
-            "Your patience with complex code (and me!)",
-            "Your sense of humor",
-            "How you never give up on a bug",
-            "The way you explain things so simply",
-            "Your eyes light up when you're happy",
-            "You are a great listener",
-            "Your ambition is contagious",
-            "You handle stress with grace",
-            "You are incredibly loyal",
-            "Your taste in music/movies",
-            "The way you care for the little things",
-            "You make 2005 look like the best year ever",
-            "Your logical way of thinking",
-            "You are a rare 'Variable' in a world of constants",
-            "You make my life easier just by being in it",
-            "You are simply irreplaceable."
+            "You are like a 'pigeon' in a group of 'crows'—completely different from everyone else.",
+            "From that clingy first meet in our DTSI class on 19-Oct-2023 to now, you've become the most important person in my life.",
+            "You are my dearest, purest, and rarest diamond. 💎",
+            "I miss you more than the sky misses the sun at night.",
+            "I can weigh you alone on one side of a weighing balance and the rest of my friends on the other side.",
+            "Talking to you, even for a few minutes, gives me a different kind of peace ('Ek alag hee peace').",
+            "You hold an irreplaceable space in my heart and I can't imagine my life without you.",
+            "You are a 'complete package' a guy could ask for.",
+            "I'm forever grateful to God for sending you into my life.",
+            "Your friendship is a treasure that I cherish every single day.",
+            "Whenever I talk with you or be with you, I feel so much happiness.",
+            "No matter how my day was, talking to you changes my whole mood.",
+            "You literally mean the whole world to me.",
+            "I love you more than you think... more than any person who loves you.",
+            "Thank you for believing in me, trusting me, and nourishing this friendship.",
+            "You have a special and giant room in my heart which cannot be replaced by anyone.",
+            "Don't ever think I will get irritated by you or leave you—that's never gonna happen.",
+            "Thank you for forgiving me for all the mistakes I have made. I'm forever grateful for that.",
+            "You are the best thing that has ever happened to me.",
+            "I am so much lucky and blessed to have you in my life.",
+            "You have been the best part of my journey. I'm always and forever by your side."
         ];
 
-        function showPage2() {
+        let currentIndex = 0;
+
+        function startReasons() {
             document.getElementById('page1').classList.add('hidden');
             document.getElementById('page2').classList.remove('hidden');
-            let box = document.getElementById('reasonsBox');
-            
-            reasons.forEach((text, i) => {
-                setTimeout(() => {
-                    let p = document.createElement('p');
-                    p.className = 'reason show-reason';
-                    p.innerHTML = `<strong>${i+1}.</strong> ${text}`;
-                    box.appendChild(p);
-                    box.scrollTop = box.scrollHeight;
-                    if(i === reasons.length - 1) {
-                        document.getElementById('nextBtn').classList.remove('hidden');
-                    }
-                }, i * 600); // 0.6 second delay between items
-            });
+            updateDisplay();
         }
 
-        function showPage3() {
+        function updateDisplay() {
+            document.getElementById('counter').innerText = `Memory ${currentIndex + 1} of 21`;
+            document.getElementById('reasonDisplay').innerText = reasons[currentIndex];
+            if (currentIndex === reasons.length - 1) {
+                document.getElementById('nextBtn').innerText = "Final Wish";
+            }
+        }
+
+        function nextReason() {
+            if (currentIndex < reasons.length - 1) {
+                currentIndex++;
+                updateDisplay();
+            } else {
+                showFinalPage();
+            }
+        }
+
+        function showFinalPage() {
             document.getElementById('page2').classList.add('hidden');
             document.getElementById('page3').classList.remove('hidden');
         }
