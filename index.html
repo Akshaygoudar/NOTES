@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Happy Birthday Sejal!</title>
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #58a6ff;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            border: 1px solid #30363d;
+            padding: 40px;
+            border-radius: 10px;
+            background: #161b22;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 600px;
+        }
+        button {
+            background: #238636;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        button:hover { background: #2ea043; }
+        .hidden { display: none; }
+        .list-container {
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+            padding-right: 10px;
+        }
+        .reason {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.5s;
+            margin-bottom: 8px;
+            color: #c9d1d9;
+        }
+        .show-reason { opacity: 1; transform: translateX(0); }
+    </style>
+</head>
+<body>
+
+    <div id="page1" class="container">
+        <h1>🎉 Happy Birthday Sejal 🎉</h1>
+        <p>> system.initialize("Surprise_Mode")</p>
+        <p>Welcome to your dedicated server, Sejal.</p>
+        <button onclick="showPage2()">Click to continue_</button>
+    </div>
+
+    <div id="page2" class="container hidden">
+        <h2>21 Things That Make Sejal Special</h2>
+        <div id="reasonsBox" class="list-container">
+            </div>
+        <button id="nextBtn" class="hidden" onclick="showPage3()">Proceed to Final Step</button>
+    </div>
+
+    <div id="page3" class="container hidden">
+        <h1>Stepping into 22...</h1>
+        <p style="color: #ff7b72;">I hope this year gives you everything you dream about.</p>
+        <hr style="border: 0.5px solid #30363d;">
+        <h3>Thank you for being my best friend.</h3>
+        <p><i>- End of Script -</i></p>
+    </div>
+
+    <script>
+        const reasons = [
+            "Your smile makes people comfortable",
+            "You always support your friends",
+            "You are strong even in difficult situations",
+            "You work hard for your dreams",
+            "Your kindness is your superpower",
+            "Your patience with complex code (and me!)",
+            "Your sense of humor",
+            "How you never give up on a bug",
+            "The way you explain things so simply",
+            "Your eyes light up when you're happy",
+            "You are a great listener",
+            "Your ambition is contagious",
+            "You handle stress with grace",
+            "You are incredibly loyal",
+            "Your taste in music/movies",
+            "The way you care for the little things",
+            "You make 2005 look like the best year ever",
+            "Your logical way of thinking",
+            "You are a rare 'Variable' in a world of constants",
+            "You make my life easier just by being in it",
+            "You are simply irreplaceable."
+        ];
+
+        function showPage2() {
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.remove('hidden');
+            let box = document.getElementById('reasonsBox');
+            
+            reasons.forEach((text, i) => {
+                setTimeout(() => {
+                    let p = document.createElement('p');
+                    p.className = 'reason show-reason';
+                    p.innerHTML = `<strong>${i+1}.</strong> ${text}`;
+                    box.appendChild(p);
+                    box.scrollTop = box.scrollHeight;
+                    if(i === reasons.length - 1) {
+                        document.getElementById('nextBtn').classList.remove('hidden');
+                    }
+                }, i * 600); // 0.6 second delay between items
+            });
+        }
+
+        function showPage3() {
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById('page3').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
