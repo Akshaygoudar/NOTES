@@ -2,160 +2,97 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For Sejal | 21st Birthday</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sejal's 21st | The Adventure</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        :root { --p: #ff69b4; --s: #70d6ff; --bg: #fff5f8; }
-        body { margin: 0; padding: 0; background: var(--bg); font-family: 'Arial Rounded MT Bold', sans-serif; height: 100vh; overflow: hidden; touch-action: none; }
-
-        /* Glassmorphism UI */
-        .card {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 85%; max-width: 400px; background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px); border-radius: 30px; padding: 30px;
-            text-align: center; z-index: 100; border: 2px solid white;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1); transition: 0.5s;
-        }
-
-        /* The "Fall" Animation for the Cake */
-        #theCake {
-            font-size: 100px; position: absolute; top: -200px; left: 50%;
-            transform: translateX(-50%); z-index: 1000;
-            transition: top 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        /* Floating Pets & Family Items */
-        .float-item {
-            position: absolute; font-size: 3rem; cursor: pointer; z-index: 10;
-            display: flex; flex-direction: column; align-items: center;
-        }
-        .item-tag { font-size: 0.7rem; color: white; background: var(--p); padding: 2px 8px; border-radius: 10px; font-weight: bold; }
-
-        .hidden { display: none; }
-        .btn { background: var(--p); color: white; border: none; padding: 15px 35px; border-radius: 50px; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        body { margin: 0; font-family: 'Arial Rounded MT Bold', sans-serif; overflow: hidden; background: #fff0f5; }
+        .screen { height: 100vh; width: 100vw; display: flex; flex-direction: column; justify-content: center; align-items: center; position: absolute; transition: 0.8s; text-align: center; padding: 20px; box-sizing: border-box; }
+        .hidden { transform: translateY(100vh); opacity: 0; }
         
-        /* The Message Scroll */
-        #msgBox { height: 180px; overflow-y: auto; text-align: left; font-size: 0.95rem; line-height: 1.6; border-top: 1px solid #eee; margin-top: 15px; padding-top: 10px; }
+        /* The Final Visual Background */
+        #finalScreen { background: url('YOUR_IMAGE_URL_HERE') no-repeat center center/cover; color: white; }
+        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1; }
+        .content { z-index: 2; }
+
+        .btn { background: #ff69b4; color: white; border: none; padding: 15px 40px; border-radius: 50px; font-size: 1.2rem; cursor: pointer; margin-top: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .heart { position: absolute; font-size: 2.5rem; cursor: pointer; z-index: 10; }
+        #msgBox { height: 150px; overflow-y: auto; text-align: left; background: rgba(255,255,255,0.2); padding: 15px; border-radius: 15px; margin-top: 10px; line-height: 1.6; }
     </style>
 </head>
 <body>
 
-    <div id="theCake">🎂</div>
-
-    <div id="step1" class="card">
-        <h1 style="color: var(--p);">Hi Sejal! ✨</h1>
-        <p>I know you don't like expensive gifts...</p>
-        <p>So I built you a digital world instead. Ready to explore?</p>
-        <button class="btn" onclick="startQuest()">Open the Surprise</button>
+    <div id="s1" class="screen">
+        <h1 style="color: #ff69b4;">Hi Sejal! 🎉</h1>
+        <p>I built a small world for your 21st birthday.</p>
+        <p>Are you ready for the journey?</p>
+        <button class="btn" onclick="next(1, 2); spawnHearts();">Start Adventure</button>
     </div>
 
-    <div id="step2" class="card hidden">
-        <h2 style="color: var(--p);">Task: Gather the Favorites</h2>
-        <p style="font-size: 0.8rem; color: #888;">Tap 15 items to invite them to your 21st!</p>
-        <div id="progress" style="font-size: 1.5rem; font-weight: bold; color: var(--p);">0 / 15</div>
-        <div style="font-size: 0.7rem; color: #aaa; margin-top: 10px;">(Dogs, Cats, Mom, Dad, Sister are waiting!)</div>
+    <div id="s2" class="screen hidden">
+        <h2 style="color: #ff69b4;">Task: Collect 21 Birthday Wishes</h2>
+        <p>Tap the floating hearts to power up your surprise!</p>
+        <div id="count" style="font-size: 2rem; font-weight: bold; color: #ff69b4;">0 / 21</div>
     </div>
 
-    <div id="step3" class="card hidden">
-        <h2 style="color: var(--p);">Level 21 Unlocked!</h2>
-        <p>Look up! The cake is arriving...</p>
-        <div id="cakeTouch" style="font-size: 80px; cursor: pointer; margin: 20px 0;">🔥🎂🔥</div>
-        <p style="font-size: 0.8rem; color: #aaa;">(Tap the cake to blow the 21 candles)</p>
-    </div>
-
-    <div id="step4" class="card hidden">
-        <h1 style="color: var(--p);">Happy Birthday! 🎉</h1>
-        <div id="msgBox"></div>
-        <p style="font-weight: bold; color: var(--p); margin-top: 10px;">~ Akshay</p>
-        <button class="btn" onclick="blast()">Blast More! 🎊</button>
+    <div id="s3" class="screen hidden" id="finalScreen">
+        <div class="overlay"></div>
+        <div class="content">
+            <h1 style="font-size: 2.5rem;">Happy Birthday, Sejal! 🐾</h1>
+            <p>A calm beach, your favorite things, and your best friend.</p>
+            <div id="msgBox">
+                </div>
+            <p style="font-weight: bold; margin-top: 10px;">~ Akshay & COCO</p>
+            <button class="btn" onclick="confettiBlast()">Blast Confetti! 🎊</button>
+        </div>
     </div>
 
     <script>
-        const library = [
-            {i:'🐕', n:'Dog'}, {i:'🐈', n:'Cat'}, {i:'👩‍🦰', n:'Sister'}, 
-            {i:'👨', n:'Dad'}, {i:'👩', n:'Mom'}, {i:'🐶', n:'Puppy'}, {i:'🐱', n:'Kitty'}
-        ];
-
+        let score = 0;
         const notes = [
             "Everything started from that DTSI class on 19-Oct-2023.",
-            "From a stranger to the person who gives me peace.",
-            "You are the 'Pigeon' in this world of crows.",
-            "I admire how much you love your family and pets.",
-            "I hope your 21st year is as brilliant as you are.",
-            "No bugs, no errors, just pure happiness this year.",
-            "Thank you for being exactly who you are.",
+            "You, me, and little COCO — the best team!",
+            "I admire how much you love your family and your pets.",
+            "May your 21st year be full of calm water and clear skies.",
             "I'm always rooting for your success, Sejal.",
-            "Enjoy every second of your special day!",
-            "Happy Birthday to my favorite hard-worker!"
+            "Enjoy your special day to the fullest!"
         ];
 
-        let count = 0;
-
-        function startQuest() {
-            document.getElementById('step1').classList.add('hidden');
-            document.getElementById('step2').classList.remove('hidden');
-            spawnItems();
+        function next(curr, nxt) {
+            document.getElementById('s' + curr).classList.add('hidden');
+            document.getElementById('s' + nxt).classList.remove('hidden');
         }
 
-        function spawnItems() {
+        function spawnHearts() {
             const timer = setInterval(() => {
-                if(count >= 15) {
+                if(score >= 21) {
                     clearInterval(timer);
-                    setTimeout(dropCake, 1000);
+                    setTimeout(() => { next(2, 3); showNotes(); }, 1000);
                     return;
                 }
-                createItem();
+                const h = document.createElement('div');
+                h.className = 'heart';
+                h.innerHTML = Math.random() > 0.5 ? '💖' : '🐶'; // Mix of hearts and paws for COCO
+                h.style.left = Math.random() * 80 + 10 + 'vw';
+                h.style.top = '100vh';
+                document.body.appendChild(h);
+                h.animate([{top: '100vh'}, {top: '-10vh'}], {duration: 5000}).onfinish = () => h.remove();
+                h.onclick = () => { score++; document.getElementById('count').innerText = `${score} / 21`; h.remove(); };
             }, 800);
         }
 
-        function createItem() {
-            const data = library[Math.floor(Math.random()*library.length)];
-            const div = document.createElement('div');
-            div.className = 'float-item';
-            div.innerHTML = `${data.i}<span class="item-tag">${data.n}</span>`;
-            div.style.left = Math.random() * 80 + 10 + 'vw';
-            div.style.top = '-100px';
-            document.body.appendChild(div);
-
-            const anim = div.animate([{top: '-100px'}, {top: '110vh'}], {duration: 5000});
-
-            const tap = () => {
-                count++;
-                document.getElementById('progress').innerText = `${count} / 15`;
-                confetti({ particleCount: 15, spread: 50, origin: { x: 0.5, y: 0.7 } });
-                div.remove();
-            };
-            div.onclick = tap;
-            div.ontouchstart = tap;
-            anim.onfinish = () => div.remove();
-        }
-
-        function dropCake() {
-            document.getElementById('step2').classList.add('hidden');
-            document.getElementById('step3').classList.remove('hidden');
-            document.getElementById('theCake').style.top = '15%';
-        }
-
-        document.getElementById('cakeTouch').onclick = () => {
-            document.getElementById('cakeTouch').innerHTML = '🎂';
-            blast();
-            setTimeout(showFinale, 1000);
-        };
-
-        function showFinale() {
-            document.getElementById('step3').classList.add('hidden');
-            document.getElementById('step4').classList.remove('hidden');
+        function showNotes() {
             const box = document.getElementById('msgBox');
             notes.forEach((m, i) => {
                 setTimeout(() => {
-                    box.innerHTML += `<p style="margin:5px 0;">✨ ${m}</p>`;
+                    box.innerHTML += `<p>✨ ${m}</p>`;
                     box.scrollTop = box.scrollHeight;
-                }, i * 3000); // 3 seconds per line = 5 minute engagement
+                }, i * 3500); // 3.5s delay for 5-minute engagement
             });
+            confettiBlast();
         }
 
-        function blast() {
+        function confettiBlast() {
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         }
     </script>
