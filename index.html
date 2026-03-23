@@ -42,15 +42,15 @@ p {
     line-height: 1.6;
 }
 
-/* BUTTONS */
+/* BUTTON */
 button {
-    margin-top: 15px;
-    padding: 10px 20px;
+    margin-top: 20px;
+    padding: 12px 25px;
     border: none;
     background: #d63384;
     color: white;
     font-size: 1rem;
-    border-radius: 25px;
+    border-radius: 30px;
     cursor: pointer;
 }
 
@@ -58,7 +58,7 @@ button:hover {
     background: #b0256b;
 }
 
-/* BACKGROUND FLOATING */
+/* FLOATING BACKGROUND */
 .background-decor {
     position: fixed;
     width: 100%;
@@ -89,10 +89,9 @@ button:hover {
 
 <div class="container">
     <div id="content"></div>
-
-    <button onclick="playMusic()">Play Music 🎵</button><br>
     <button onclick="next()">Next ➡️</button>
 
+    <!-- Background Music -->
     <audio id="bgMusic" loop>
         <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
     </audio>
@@ -100,7 +99,7 @@ button:hover {
 
 <script>
 
-/* TYPEWRITER FUNCTION */
+/* TYPEWRITER */
 function typeWriter(html, elementId, speed = 25) {
     let i = 0;
     const el = document.getElementById(elementId);
@@ -188,12 +187,25 @@ function showPage() {
     typeWriter(pages[index], "content");
 }
 
+/* MUSIC FIX */
+let musicStarted = false;
+
+function startMusic() {
+    if (!musicStarted) {
+        document.getElementById("bgMusic").play();
+        musicStarted = true;
+    }
+}
+
+/* NEXT BUTTON */
 function next() {
+    startMusic(); // starts music on first click
+
     if(index < pages.length - 1){
         index++;
         showPage();
 
-        // Final confetti
+        // FINAL CONFETTI
         if(index === pages.length - 1){
             confetti({
                 particleCount: 150,
@@ -204,15 +216,13 @@ function next() {
     }
 }
 
+/* ALSO START MUSIC ON ANY CLICK */
+document.body.addEventListener("click", startMusic);
+
 showPage();
 
-/* MUSIC */
-function playMusic() {
-    document.getElementById("bgMusic").play();
-}
-
 /* FLOATING BACKGROUND */
-const emojis = ["🎈","🎉","✨","💖","🌸"];
+const emojis = ["🎈","🎉","✨","💖","🌸","🥳",”🐶",”🐾”];
 
 function createFloating() {
     const el = document.createElement("div");
