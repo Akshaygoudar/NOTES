@@ -11,56 +11,61 @@
         body, html { 
             margin: 0; padding: 0; width: 100%; height: 100%; 
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background-color: var(--soft-pink); color: var(--text);
+            background: linear-gradient(to bottom, #a1c4fd 0%, #c2e9fb 100%); /* Blue Sky/Water Vibe */
+            color: var(--text);
             scroll-snap-type: y mandatory; overflow-y: scroll; scroll-behavior: smooth;
+        }
+
+        /* Animated Beach Background */
+        .beach-bg {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 50%;
+            background: linear-gradient(to top, #f3e5ab 0%, transparent 100%); /* Sand color */
+            z-index: -1;
         }
 
         section {
             height: 100vh; width: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             scroll-snap-align: start; text-align: center; padding: 40px; box-sizing: border-box;
-            position: relative; border-bottom: 1px solid rgba(214, 51, 132, 0.1);
+            position: relative;
         }
 
-        .content { max-width: 600px; opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
+        .content { 
+            max-width: 600px; opacity: 0; transform: translateY(30px); transition: all 1s ease-out; 
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            padding: 40px; border-radius: 30px;
+            border: 2px solid white;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
         .visible .content { opacity: 1; transform: translateY(0); }
 
         h1 { font-size: 2.5rem; color: var(--deep-pink); margin-bottom: 20px; font-weight: 300; }
-        p { font-size: 1.2rem; line-height: 1.6; color: #666; font-weight: 300; }
+        p { font-size: 1.2rem; line-height: 1.6; color: #444; font-weight: 400; }
         
-        .nature-icon { font-size: 3rem; margin-bottom: 20px; display: block; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.05)); }
-
-        /* Floating particles for a "water/nature" feel */
-        .particle {
-            position: absolute; background: rgba(214, 51, 132, 0.1); border-radius: 50%;
-            pointer-events: none; animation: float 10s infinite linear;
-        }
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            50% { opacity: 0.5; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-        }
+        .nature-icon { font-size: 3.5rem; margin-bottom: 20px; display: block; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1)); }
 
         .scroll-indicator {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            font-size: 0.8rem; color: var(--deep-pink); animation: bounce 2s infinite;
-            text-transform: uppercase; letter-spacing: 2px;
+            font-size: 0.8rem; color: #fff; background: var(--deep-pink);
+            padding: 5px 15px; border-radius: 20px;
+            animation: bounce 2s infinite; z-index: 100;
         }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);} 40% {transform: translateY(-10px) translateX(-50%);} 60% {transform: translateY(-5px) translateX(-50%);} }
 
-        #finale { background: white; }
-        .footer-note { margin-top: 50px; font-style: italic; color: var(--deep-pink); }
+        .footer-note { margin-top: 30px; font-style: italic; color: var(--deep-pink); font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
-    <div class="scroll-indicator" id="indicator">Scroll Down</div>
+    <div class="beach-bg"></div>
+    <div class="scroll-indicator" id="indicator">Scroll for the surprise ↓</div>
 
-    <section id="sec1">
+    <section>
         <div class="content">
             <span class="nature-icon">🌊</span>
             <h1>Hi Sejal.</h1>
-            <p>I know you don't want anything fancy or expensive. <br> So I decided to just be honest and tell you why I'm thankful for you.</p>
+            <p>I know you don't like fancy gifts. <br> So I decided to just tell you why I'm thankful for you.</p>
         </div>
     </section>
 
@@ -68,7 +73,7 @@
         <div class="content">
             <span class="nature-icon">🌿</span>
             <h1>Where it began...</h1>
-            <p>I'm so grateful for that DTSI class back in Oct 2023. It brought a brilliant, focused, and kind person into my life. I'm thankful that we became friends.</p>
+            <p>I'm so grateful for that DTSI class back in Oct 2023. It brought a brilliant and kind friend into my life.</p>
         </div>
     </section>
 
@@ -76,58 +81,64 @@
         <div class="content">
             <span class="nature-icon">✨</span>
             <h1>Your Energy.</h1>
-            <p>I admire how you handle life—with grace, intelligence, and a quiet strength. You are like a calm river stream in a world that is often too loud.</p>
+            <p>I admire your quiet strength. You are like a calm river stream in a world that is often too loud.</p>
         </div>
     </section>
 
     <section>
         <div class="content">
-            <span class="nature-icon">🐾</span>
+            <span class="nature-icon">🐩</span>
             <h1>Your World.</h1>
-            <p>Seeing your dedication to your Mom, Dad, and Sister—and the love you have for little <b>Coco</b>—is truly beautiful. It says a lot about the person you are.</p>
+            <p>The love you have for your family and <b>Coco</b> is truly beautiful. It shows the pure heart you have.</p>
         </div>
     </section>
 
     <section id="finale">
         <div class="content">
-            <span class="nature-icon">🌸</span>
-            <h1>Happy 21st Birthday.</h1>
-            <p>No bugs, no errors—just a year full of peace, success, and clear blue water. I'm always rooting for you.</p>
-            <div class="footer-note">With gratitude,<br>Akshay & Coco 🐩</div>
-            <button onclick="celebrate()" style="margin-top:30px; padding:12px 30px; border:1px solid var(--deep-pink); background:transparent; color:var(--deep-pink); border-radius:50px; cursor:pointer;">Click for a Wish</button>
+            <span class="nature-icon">🌴</span>
+            <h1>Happy 21st Birthday!</h1>
+            <p>May your year be full of peace, success, and clear blue water. Always rooting for you!</p>
+            <div class="footer-note">With gratitude,<br>Akshay & Coco 🐾</div>
+            <button onclick="poppers()" style="margin-top:20px; padding:12px 30px; background:var(--deep-pink); color:white; border:none; border-radius:50px; cursor:pointer; font-weight:bold;">Blast More Poppers! 🎉</button>
         </div>
     </section>
 
     <script>
-        // Intersection Observer to trigger animations
+        // BACKGROUND POPPER LOGIC (Continuous)
+        function continuousPoppers() {
+            confetti({
+                particleCount: 2,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 },
+                colors: ['#ff69b4', '#ffffff', '#70d6ff']
+            });
+            confetti({
+                particleCount: 2,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 },
+                colors: ['#ff69b4', '#ffffff', '#70d6ff']
+            });
+            setTimeout(continuousPoppers, 500); // Keeps popping every half second
+        }
+        continuousPoppers();
+
+        // Big Popper on Scroll
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    if(entry.target.id === 'finale') {
-                        document.getElementById('indicator').style.display = 'none';
-                    }
+                    poppers(); // Blast when section enters view
+                    if(entry.target.id === 'finale') document.getElementById('indicator').style.display = 'none';
                 }
             });
         }, { threshold: 0.5 });
 
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
-        });
+        document.querySelectorAll('section').forEach(section => observer.observe(section));
 
-        // Create background particles
-        for (let i = 0; i < 20; i++) {
-            let p = document.createElement('div');
-            p.className = 'particle';
-            p.style.left = Math.random() * 100 + 'vw';
-            p.style.width = p.style.height = Math.random() * 20 + 5 + 'px';
-            p.style.animationDelay = Math.random() * 10 + 's';
-            p.style.bottom = "-20px";
-            document.body.appendChild(p);
-        }
-
-        function celebrate() {
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#d63384', '#ffffff', '#ffb6c1'] });
+        function poppers() {
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
         }
     </script>
 </body>
