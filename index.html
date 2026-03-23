@@ -21,7 +21,6 @@ body {
     overflow: hidden;
 }
 
-/* MAIN CARD */
 .container {
     width: 90%;
     max-width: 600px;
@@ -42,7 +41,6 @@ p {
     line-height: 1.6;
 }
 
-/* BUTTON */
 button {
     margin-top: 20px;
     padding: 12px 25px;
@@ -58,7 +56,7 @@ button:hover {
     background: #b0256b;
 }
 
-/* FLOATING BACKGROUND */
+/* Floating background */
 .background-decor {
     position: fixed;
     width: 100%;
@@ -91,31 +89,15 @@ button:hover {
     <div id="content"></div>
     <button onclick="next()">Next ➡️</button>
 
-    <!-- Background Music -->
+    <!-- Working Audio -->
     <audio id="bgMusic" loop>
-        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+        <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_946b6f54d1.mp3">
     </audio>
 </div>
 
 <script>
 
-/* TYPEWRITER */
-function typeWriter(html, elementId, speed = 25) {
-    let i = 0;
-    const el = document.getElementById(elementId);
-    el.innerHTML = "";
-    
-    function typing() {
-        if (i < html.length) {
-            el.innerHTML += html.charAt(i);
-            i++;
-            setTimeout(typing, speed);
-        }
-    }
-    typing();
-}
-
-/* PAGES */
+/* Pages */
 const pages = [
 
 `<h1>Hey Sejal ❤️</h1>
@@ -152,60 +134,63 @@ you’d be the part that keeps everything running smoothly.
 
 `<p>
 …random days feel better  
-…small moments feel special  
-…life feels lighter  
-…smiles come naturally
+<br>…small moments feel special  
+<br>…life feels lighter  
+<br>…smiles come naturally
 </p>`,
 
 `<h2>
 No big words.  
-No fancy lines.  
+<br>No fancy lines.  
 
-Just one thing —  
-you matter more than you think ❤️  
+<br><br>Just one thing —  
+<br>you matter more than you think ❤️  
 
-And that’s you, Sejal ❤️
+<br><br>And that’s you, Sejal ❤️
 </h2>`,
 
 `<p>
 Thank you for being in my life.  
-Thank you for staying.  
-Thank you for being you.  
+<br>Thank you for staying.  
+<br>Thank you for being you.  
 
-I’m really grateful for you… more than I can put into words ❤️
+<br><br>I’m really grateful for you… more than I can put into words ❤️
 </p>`,
 
 `<h2>
-Happy Birthdayyyy Beautiful ❤️ <br><br>
+Happy Birthdayyyy Beautiful ❤️  
+<br><br>
 Happy 21st to my favourite one ✨
 </h2>`
 ];
 
 let index = 0;
 
+/* Show page (NO animation) */
 function showPage() {
-    typeWriter(pages[index], "content");
+    document.getElementById("content").innerHTML = pages[index];
 }
 
-/* MUSIC FIX */
+/* Music */
 let musicStarted = false;
 
 function startMusic() {
     if (!musicStarted) {
-        document.getElementById("bgMusic").play();
+        const music = document.getElementById("bgMusic");
+        music.volume = 0.5;
+        music.play().catch(() => {});
         musicStarted = true;
     }
 }
 
-/* NEXT BUTTON */
+/* Next */
 function next() {
-    startMusic(); // starts music on first click
+    startMusic();
 
     if(index < pages.length - 1){
         index++;
         showPage();
 
-        // FINAL CONFETTI
         if(index === pages.length - 1){
             confetti({
                 particleCount: 150,
@@ -216,12 +201,12 @@ function next() {
     }
 }
 
-/* ALSO START MUSIC ON ANY CLICK */
+/* Start music on any click */
 document.body.addEventListener("click", startMusic);
 
 showPage();
 
-/* FLOATING BACKGROUND */
+/* Floating */
 const emojis = ["🎈","🎉","✨","💖","🌸"];
 
 function createFloating() {
