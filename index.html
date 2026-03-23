@@ -21,6 +21,7 @@ body {
     overflow: hidden;
 }
 
+/* MAIN CARD */
 .container {
     width: 90%;
     max-width: 600px;
@@ -41,6 +42,7 @@ p {
     line-height: 1.6;
 }
 
+/* BUTTON */
 button {
     margin-top: 20px;
     padding: 12px 25px;
@@ -56,7 +58,7 @@ button:hover {
     background: #b0256b;
 }
 
-/* Floating background */
+/* FLOATING BACKGROUND */
 .background-decor {
     position: fixed;
     width: 100%;
@@ -89,15 +91,31 @@ button:hover {
     <div id="content"></div>
     <button onclick="next()">Next ➡️</button>
 
-    <!-- Working Audio -->
+    <!-- Background Music -->
     <audio id="bgMusic" loop>
-        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9b4c1c.mp3?filename=romantic-background-112191.mp3" type="audio/mpeg">
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
     </audio>
 </div>
 
 <script>
 
-/* Pages */
+/* TYPEWRITER */
+function typeWriter(html, elementId, speed = 25) {
+    let i = 0;
+    const el = document.getElementById(elementId);
+    el.innerHTML = "";
+    
+    function typing() {
+        if (i < html.length) {
+            el.innerHTML += html.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+        }
+    }
+    typing();
+}
+
+/* PAGES */
 const pages = [
 
 `<h1>Hey Sejal ❤️</h1>
@@ -165,33 +183,29 @@ Happy 21st to my favourite one ✨
 
 let index = 0;
 
-/* Show page instantly */
 function showPage() {
-    document.getElementById("content").innerHTML = pages[index];
+    typeWriter(pages[index], "content");
 }
 
-/* Music control */
+/* MUSIC FIX */
 let musicStarted = false;
 
 function startMusic() {
     if (!musicStarted) {
-        const music = document.getElementById("bgMusic");
-        music.volume = 0.5;
-
-        music.play().then(() => {
-            musicStarted = true;
-        }).catch(() => {});
+        document.getElementById("bgMusic").play();
+        musicStarted = true;
     }
 }
 
-/* Next button */
+/* NEXT BUTTON */
 function next() {
-    startMusic();
+    startMusic(); // starts music on first click
 
     if(index < pages.length - 1){
         index++;
         showPage();
 
+        // FINAL CONFETTI
         if(index === pages.length - 1){
             confetti({
                 particleCount: 150,
@@ -202,12 +216,12 @@ function next() {
     }
 }
 
-/* Start music on any click */
+/* ALSO START MUSIC ON ANY CLICK */
 document.body.addEventListener("click", startMusic);
 
 showPage();
 
-/* Floating decorations */
+/* FLOATING BACKGROUND */
 const emojis = ["🎈","🎉","✨","💖","🌸"];
 
 function createFloating() {
