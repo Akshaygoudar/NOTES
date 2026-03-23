@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Sejal ❤️</title>
 
-<!-- Confetti -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <style>
@@ -21,6 +20,29 @@ body {
     overflow: hidden;
 }
 
+/* Start Screen */
+.start-screen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #a1c4fd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.start-btn {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 30px;
+    background: #d63384;
+    color: white;
+    cursor: pointer;
+}
+
+/* Card */
 .container {
     width: 90%;
     max-width: 600px;
@@ -29,17 +51,11 @@ body {
     border-radius: 25px;
     text-align: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    z-index: 2;
+    display: none;
 }
 
-h1, h2 {
-    color: #d63384;
-}
-
-p {
-    font-size: 1.2rem;
-    line-height: 1.6;
-}
+h1, h2 { color: #d63384; }
+p { font-size: 1.2rem; }
 
 button {
     margin-top: 20px;
@@ -47,184 +63,106 @@ button {
     border: none;
     background: #d63384;
     color: white;
-    font-size: 1rem;
     border-radius: 30px;
     cursor: pointer;
 }
 
-button:hover {
-    background: #b0256b;
-}
-
-/* Floating background */
+/* Floating */
 .background-decor {
     position: fixed;
     width: 100%;
     height: 100%;
-    overflow: hidden;
-    top: 0;
-    left: 0;
-    z-index: 0;
+    z-index: -1;
 }
 
 .floating {
     position: absolute;
     animation: floatUp linear infinite;
-    opacity: 0.7;
 }
 
 @keyframes floatUp {
-    0% { transform: translateY(100vh); opacity: 0; }
-    20% { opacity: 1; }
-    100% { transform: translateY(-10vh); opacity: 0; }
+    0% { transform: translateY(100vh); }
+    100% { transform: translateY(-10vh); }
 }
 </style>
 </head>
 
 <body>
 
+<!-- Start Screen -->
+<div class="start-screen" id="startScreen">
+    <button class="start-btn" onclick="startExperience()">Tap to Start ❤️</button>
+</div>
+
 <div class="background-decor"></div>
 
-<div class="container">
+<div class="container" id="mainContent">
     <div id="content"></div>
     <button onclick="next()">Next ➡️</button>
 
-    <!-- Working Audio -->
     <audio id="bgMusic" loop>
-        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9b4c1c.mp3?filename=romantic-background-112191.mp3" type="audio/mpeg">
+        <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_946b6f54d1.mp3">
     </audio>
 </div>
 
 <script>
 
-/* Pages */
 const pages = [
-
-`<h1>Hey Sejal ❤️</h1>
-<p>
-Today is your day… 🎉  
-And I just wanted to make something a little different for you.
-</p>`,
-
-`<p>
-No big gifts…  
-No fancy things…  
-
-Just something simple… but real.
-</p>`,
-
+`<h1>Hey Sejal ❤️</h1><p>Today is your day 🎉</p>`,
+`<p>No big gifts… just something real.</p>`,
 `<h1>She is the reason…</h1>`,
-
-`<p>
-Some people come into life quietly…  
-but leave a big impact without even trying.
-</p>`,
-
-`<p>
-Not everyone stays.  
-Not everyone understands.  
-Not everyone makes things feel easy.  
-But you do ❤️
-</p>`,
-
-`<p>
-If life was a system…  
-you’d be the part that keeps everything running smoothly.
-</p>`,
-
-`<p>
-…random days feel better  
-…small moments feel special  
-…life feels lighter  
-…smiles come naturally
-</p>`,
-
-`<h2>
-No big words.  
-No fancy lines.  
-
-Just one thing —  
-you matter more than you think ❤️  
-
-And that’s you, Sejal ❤️
-</h2>`,
-
-`<p>
-Thank you for being in my life.  
-Thank you for staying.  
-Thank you for being you.  
-
-I’m really grateful for you… more than I can put into words ❤️
-</p>`,
-
-`<h2>
-Happy Birthdayyyy Beautiful ❤️ <br><br>
-Happy 21st to my favourite one ✨
-</h2>`
+`<p>Some people come quietly… but mean everything.</p>`,
+`<p>Not everyone stays… but you did ❤️</p>`,
+`<p>If life was a system… you’d be the best part of it.</p>`,
+`<p>…days feel better<br>…life feels lighter</p>`,
+`<h2>You matter more than you think ❤️</h2>`,
+`<p>I’m really grateful for you ❤️</p>`,
+`<h2>Happy Birthdayyyy Beautiful ❤️<br>Happy 21st to my favourite one ✨</h2>`
 ];
 
 let index = 0;
 
-/* Show page instantly */
 function showPage() {
     document.getElementById("content").innerHTML = pages[index];
 }
 
-/* Music control */
-let musicStarted = false;
-
-function startMusic() {
-    if (!musicStarted) {
-        const music = document.getElementById("bgMusic");
-        music.volume = 0.5;
-
-        music.play().then(() => {
-            musicStarted = true;
-        }).catch(() => {});
-    }
-}
-
-/* Next button */
 function next() {
-    startMusic();
-
     if(index < pages.length - 1){
         index++;
         showPage();
 
         if(index === pages.length - 1){
-            confetti({
-                particleCount: 150,
-                spread: 80,
-                origin: { y: 0.6 }
-            });
+            confetti({ particleCount: 150, spread: 80 });
         }
     }
 }
 
-/* Start music on any click */
-document.body.addEventListener("click", startMusic);
+/* START EXPERIENCE (FIXES MUSIC) */
+function startExperience() {
+    document.getElementById("startScreen").style.display = "none";
+    document.getElementById("mainContent").style.display = "block";
+
+    const music = document.getElementById("bgMusic");
+    music.volume = 0.5;
+    music.play();
+}
 
 showPage();
 
-/* Floating decorations */
-const emojis = ["🎈","🎉","✨","💖","🌸"];
+/* Floating */
+const emojis = ["🎈","🎉","✨","💖"];
 
-function createFloating() {
+setInterval(() => {
     const el = document.createElement("div");
     el.className = "floating";
-    el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-
-    el.style.left = Math.random() * 100 + "vw";
-    el.style.fontSize = (20 + Math.random() * 20) + "px";
-    el.style.animationDuration = (6 + Math.random() * 5) + "s";
+    el.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+    el.style.left = Math.random()*100+"vw";
+    el.style.animationDuration = "6s";
 
     document.querySelector(".background-decor").appendChild(el);
 
-    setTimeout(() => el.remove(), 10000);
-}
-
-setInterval(createFloating, 400);
+    setTimeout(()=>el.remove(),6000);
+},500);
 
 </script>
 
