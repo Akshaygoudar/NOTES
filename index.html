@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Sejal ❤️</title>
 
+<!-- Confetti -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
 <style>
 body {
     margin: 0;
@@ -39,15 +42,15 @@ p {
     line-height: 1.6;
 }
 
-/* BUTTON */
+/* BUTTONS */
 button {
-    margin-top: 30px;
-    padding: 12px 25px;
+    margin-top: 15px;
+    padding: 10px 20px;
     border: none;
     background: #d63384;
     color: white;
     font-size: 1rem;
-    border-radius: 30px;
+    border-radius: 25px;
     cursor: pointer;
 }
 
@@ -73,17 +76,9 @@ button:hover {
 }
 
 @keyframes floatUp {
-    0% {
-        transform: translateY(100vh);
-        opacity: 0;
-    }
-    20% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-10vh);
-        opacity: 0;
-    }
+    0% { transform: translateY(100vh); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
 }
 </style>
 </head>
@@ -94,10 +89,32 @@ button:hover {
 
 <div class="container">
     <div id="content"></div>
+
+    <button onclick="playMusic()">Play Music 🎵</button><br>
     <button onclick="next()">Next ➡️</button>
+
+    <audio id="bgMusic" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    </audio>
 </div>
 
 <script>
+
+/* TYPEWRITER FUNCTION */
+function typeWriter(html, elementId, speed = 25) {
+    let i = 0;
+    const el = document.getElementById(elementId);
+    el.innerHTML = "";
+    
+    function typing() {
+        if (i < html.length) {
+            el.innerHTML += html.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+        }
+    }
+    typing();
+}
 
 /* PAGES */
 const pages = [
@@ -168,17 +185,31 @@ Happy 21st to my favourite one ✨
 let index = 0;
 
 function showPage() {
-    document.getElementById("content").innerHTML = pages[index];
+    typeWriter(pages[index], "content");
 }
 
 function next() {
     if(index < pages.length - 1){
         index++;
         showPage();
+
+        // Final confetti
+        if(index === pages.length - 1){
+            confetti({
+                particleCount: 150,
+                spread: 80,
+                origin: { y: 0.6 }
+            });
+        }
     }
 }
 
 showPage();
+
+/* MUSIC */
+function playMusic() {
+    document.getElementById("bgMusic").play();
+}
 
 /* FLOATING BACKGROUND */
 const emojis = ["🎈","🎉","✨","💖","🌸"];
@@ -194,9 +225,7 @@ function createFloating() {
 
     document.querySelector(".background-decor").appendChild(el);
 
-    setTimeout(() => {
-        el.remove();
-    }, 10000);
+    setTimeout(() => el.remove(), 10000);
 }
 
 setInterval(createFloating, 400);
