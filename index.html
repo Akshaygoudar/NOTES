@@ -1,145 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Sejal | 21 Years of Light</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <style>
-        :root { --soft-pink: #fff5f7; --deep-pink: #d63384; --text: #4a4a4a; }
-        
-        body, html { 
-            margin: 0; padding: 0; width: 100%; height: 100%; 
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background: linear-gradient(to bottom, #a1c4fd 0%, #c2e9fb 100%); /* Blue Sky/Water Vibe */
-            color: var(--text);
-            scroll-snap-type: y mandatory; overflow-y: scroll; scroll-behavior: smooth;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Sejal ❤️</title>
 
-        /* Animated Beach Background */
-        .beach-bg {
-            position: fixed; bottom: 0; left: 0; width: 100%; height: 50%;
-            background: linear-gradient(to top, #f3e5ab 0%, transparent 100%); /* Sand color */
-            z-index: -1;
-        }
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to bottom, #a1c4fd, #c2e9fb);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #444;
+}
 
-        section {
-            height: 100vh; width: 100%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            scroll-snap-align: start; text-align: center; padding: 40px; box-sizing: border-box;
-            position: relative;
-        }
+.container {
+    width: 90%;
+    max-width: 600px;
+    background: rgba(255,255,255,0.95);
+    padding: 40px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
 
-        .content { 
-            max-width: 600px; opacity: 0; transform: translateY(30px); transition: all 1s ease-out; 
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(8px);
-            padding: 40px; border-radius: 30px;
-            border: 2px solid white;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-        }
-        .visible .content { opacity: 1; transform: translateY(0); }
+h1, h2 {
+    color: #d63384;
+}
 
-        h1 { font-size: 2.5rem; color: var(--deep-pink); margin-bottom: 20px; font-weight: 300; }
-        p { font-size: 1.2rem; line-height: 1.6; color: #444; font-weight: 400; }
-        
-        .nature-icon { font-size: 3.5rem; margin-bottom: 20px; display: block; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1)); }
+p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
 
-        .scroll-indicator {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            font-size: 0.8rem; color: #fff; background: var(--deep-pink);
-            padding: 5px 15px; border-radius: 20px;
-            animation: bounce 2s infinite; z-index: 100;
-        }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);} 40% {transform: translateY(-10px) translateX(-50%);} 60% {transform: translateY(-5px) translateX(-50%);} }
+button {
+    margin-top: 30px;
+    padding: 12px 25px;
+    border: none;
+    background: #d63384;
+    color: white;
+    font-size: 1rem;
+    border-radius: 30px;
+    cursor: pointer;
+}
 
-        .footer-note { margin-top: 30px; font-style: italic; color: var(--deep-pink); font-size: 1.1rem; }
-    </style>
+button:hover {
+    background: #b0256b;
+}
+</style>
 </head>
+
 <body>
 
-    <div class="beach-bg"></div>
-    <div class="scroll-indicator" id="indicator">Scroll for the surprise ↓</div>
+<div class="container">
+    <div id="content"></div>
+    <button onclick="next()">Next ➡️</button>
+</div>
 
-    <section>
-        <div class="content">
-            <span class="nature-icon">🌊</span>
-            <h1>Hi Sejal.</h1>
-            <p>I know you don't like fancy gifts. <br> So I decided to just tell you why I'm thankful for you.</p>
-        </div>
-    </section>
+<script>
+const pages = [
 
-    <section>
-        <div class="content">
-            <span class="nature-icon">🌿</span>
-            <h1>Where it began...</h1>
-            <p>I'm so grateful for that DTSI class back in Oct 2023.It brought an amazing, kind-hearted, and genuinely special person into my life — someone who has a way of making everything feel better just by being there.</p>
-        </div>
-    </section>
+`<h1>She is the reason…</h1>`,
 
-    <section>
-        <div class="content">
-            <span class="nature-icon">✨</span>
-            <h1>Your Energy.</h1>
-            <p>I admire your quiet strength. You are like a calm river stream in a world that is often too loud.</p>
-        </div>
-    </section>
+`<p>
+Some people come into life quietly…  
+but leave a big impact without even trying.
+</p>`,
 
-    <section>
-        <div class="content">
-            <span class="nature-icon">🐩</span>
-            <h1>Your World.</h1>
-            <p>The love you have for your family and <b>Coco</b> is truly beautiful. It shows the pure heart you have.</p>
-        </div>
-    </section>
+`<p>
+Not everyone stays.  
+Not everyone understands.  
+Not everyone makes things feel easy.  
+But you do ❤️
+</p>`,
 
-    <section id="finale">
-        <div class="content">
-            <span class="nature-icon">🌴</span>
-            <h1>Happy 21st Birthday!</h1>
-            <p>May your year be full of peace, success, and clear blue water. Always rooting for you!</p>
-            <div class="footer-note">With gratitude,<br>Akshay & Coco 🐾</div>
-            <button onclick="poppers()" style="margin-top:20px; padding:12px 30px; background:var(--deep-pink); color:white; border:none; border-radius:50px; cursor:pointer; font-weight:bold;">Blast More Poppers! 🎉</button>
-        </div>
-    </section>
+`<p>
+If life was a system…  
+you’d be the part that keeps everything running smoothly.
+</p>`,
 
-    <script>
-        // BACKGROUND POPPER LOGIC (Continuous)
-        function continuousPoppers() {
-            confetti({
-                particleCount: 2,
-                angle: 60,
-                spread: 55,
-                origin: { x: 0 },
-                colors: ['#ff69b4', '#ffffff', '#70d6ff']
-            });
-            confetti({
-                particleCount: 2,
-                angle: 120,
-                spread: 55,
-                origin: { x: 1 },
-                colors: ['#ff69b4', '#ffffff', '#70d6ff']
-            });
-            setTimeout(continuousPoppers, 500); // Keeps popping every half second
-        }
-        continuousPoppers();
+`<p>
+…random days feel better  
+…small moments feel special  
+…life feels lighter  
+…smiles come naturally
+</p>`,
 
-        // Big Popper on Scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    poppers(); // Blast when section enters view
-                    if(entry.target.id === 'finale') document.getElementById('indicator').style.display = 'none';
-                }
-            });
-        }, { threshold: 0.5 });
+`<h2>
+No big words.  
+No fancy lines.  
 
-        document.querySelectorAll('section').forEach(section => observer.observe(section));
+Just one thing —  
+you matter more than you think ❤️  
 
-        function poppers() {
-            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-        }
-    </script>
+And that’s you, Sejal ❤️
+</h2>`,
+
+`<p>
+Thank you for being in my life.  
+Thank you for staying.  
+Thank you for being you.  
+
+I’m really grateful for you… more than I can put into words ❤️
+</p>`,
+
+`<h2>Happy Birthday ❤️</h2>`
+];
+
+let index = 0;
+
+function showPage() {
+    document.getElementById("content").innerHTML = pages[index];
+}
+
+function next() {
+    if(index < pages.length - 1){
+        index++;
+        showPage();
+    }
+}
+
+showPage();
+</script>
+
 </body>
 </html>
