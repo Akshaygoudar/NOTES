@@ -3,59 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sejal's 21st | The Adventure</title>
+    <title>For Sejal | A Special Thank You</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        body { margin: 0; font-family: 'Arial Rounded MT Bold', sans-serif; overflow: hidden; background: #fff0f5; }
-        .screen { height: 100vh; width: 100vw; display: flex; flex-direction: column; justify-content: center; align-items: center; position: absolute; transition: 0.8s; text-align: center; padding: 20px; box-sizing: border-box; }
-        .hidden { transform: translateY(100vh); opacity: 0; }
+        body { margin: 0; font-family: 'Arial Rounded MT Bold', 'Helvetica', sans-serif; overflow: hidden; background: linear-gradient(180deg, #fff0f5 0%, #ffffff 100%); }
+        .screen { height: 100vh; width: 100vw; display: flex; flex-direction: column; justify-content: center; align-items: center; position: absolute; transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1); text-align: center; padding: 25px; box-sizing: border-box; }
+        .hidden { transform: translateY(-100vh); opacity: 0; pointer-events: none; }
         
-        /* The Final Visual Background */
-        #finalScreen { background: url('YOUR_IMAGE_URL_HERE') no-repeat center center/cover; color: white; }
-        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1; }
-        .content { z-index: 2; }
+        .card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); padding: 30px; border-radius: 30px; box-shadow: 0 15px 35px rgba(255, 105, 180, 0.15); border: 1px solid white; max-width: 400px; }
+        
+        h1 { color: #d63384; font-size: 2.2rem; margin-bottom: 10px; }
+        p { color: #666; font-size: 1.1rem; line-height: 1.4; }
 
-        .btn { background: #ff69b4; color: white; border: none; padding: 15px 40px; border-radius: 50px; font-size: 1.2rem; cursor: pointer; margin-top: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .heart { position: absolute; font-size: 2.5rem; cursor: pointer; z-index: 10; }
-        #msgBox { height: 150px; overflow-y: auto; text-align: left; background: rgba(255,255,255,0.2); padding: 15px; border-radius: 15px; margin-top: 10px; line-height: 1.6; }
+        .btn { background: #ff69b4; color: white; border: none; padding: 16px 45px; border-radius: 50px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 25px; transition: 0.3s; box-shadow: 0 8px 15px rgba(255, 105, 180, 0.3); }
+        .btn:active { transform: scale(0.95); }
+
+        .heart { position: absolute; font-size: 2.5rem; cursor: pointer; z-index: 10; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1)); }
+        
+        #msgBox { height: 220px; overflow-y: auto; text-align: left; background: rgba(255, 255, 255, 0.5); padding: 20px; border-radius: 20px; margin-top: 15px; border: 1px dashed #ff69b4; }
+        .note-text { margin: 0 0 15px 0; color: #444; font-size: 1rem; border-bottom: 1px solid #ffe6eb; padding-bottom: 8px; }
     </style>
 </head>
 <body>
 
     <div id="s1" class="screen">
-        <h1 style="color: #ff69b4;">Hi Sejal! 🎉</h1>
-        <p>I built a small world for your 21st birthday.</p>
-        <p>Are you ready for the journey?</p>
-        <button class="btn" onclick="next(1, 2); spawnHearts();">Start Adventure</button>
+        <div class="card">
+            <h1>Hi Sejal! ✨</h1>
+            <p>I built this small digital space for you because your 21st deserves something special.</p>
+            <p style="font-size: 0.9rem; color: #999;">(Inspired by you, your family, and Coco)</p>
+            <button class="btn" onclick="next(1, 2); spawnHearts();">Enter Your World</button>
+        </div>
     </div>
 
     <div id="s2" class="screen hidden">
-        <h2 style="color: #ff69b4;">Task: Collect 21 Birthday Wishes</h2>
-        <p>Tap the floating hearts to power up your surprise!</p>
-        <div id="count" style="font-size: 2rem; font-weight: bold; color: #ff69b4;">0 / 21</div>
+        <h2 style="color: #ff69b4; margin-bottom: 5px;">Catch 21 Wishes</h2>
+        <p style="margin-top: 0;">Tap the hearts & Coco's paws!</p>
+        <div id="count" style="font-size: 3rem; font-weight: bold; color: #ff69b4;">0 / 21</div>
     </div>
 
-    <div id="s3" class="screen hidden" id="finalScreen">
-        <div class="overlay"></div>
-        <div class="content">
-            <h1 style="font-size: 2.5rem;">Happy Birthday, Sejal! 🐾</h1>
-            <p>A calm beach, your favorite things, and your best friend.</p>
+    <div id="s3" class="screen hidden">
+        <div class="card">
+            <h1 style="font-size: 1.8rem;">Happy 21st, Sejal! 🌸</h1>
             <div id="msgBox">
                 </div>
-            <p style="font-weight: bold; margin-top: 10px;">~ Akshay & COCO</p>
-            <button class="btn" onclick="confettiBlast()">Blast Confetti! 🎊</button>
+            <p style="font-weight: bold; color: #d63384; margin-top: 15px;">~ Akshay & Coco 🐩</p>
+            <button class="btn" style="padding: 10px 25px; font-size: 0.9rem;" onclick="confettiBlast()">More Confetti! 🎊</button>
         </div>
     </div>
 
     <script>
         let score = 0;
         const notes = [
-            "Everything started from that DTSI class on 19-Oct-2023.",
-            "You, me, and little COCO — the best team!",
-            "I admire how much you love your family and your pets.",
-            "May your 21st year be full of calm water and clear skies.",
-            "I'm always rooting for your success, Sejal.",
-            "Enjoy your special day to the fullest!"
+            "I am truly thankful for our friendship that started back in DTSI class.",
+            "I'm grateful for your calm nature and the peace you bring to every conversation.",
+            "Thank you for being such a brilliant and hardworking person; you inspire me.",
+            "I admire the love you have for your family and your little Coco.",
+            "I'm so grateful that we crossed paths. You are a wonderful person.",
+            "May your 21st year be as kind and beautiful as your heart.",
+            "Thank you for being exactly who you are. Happy Birthday!"
         ];
 
         function next(curr, nxt) {
@@ -72,28 +77,52 @@
                 }
                 const h = document.createElement('div');
                 h.className = 'heart';
-                h.innerHTML = Math.random() > 0.5 ? '💖' : '🐶'; // Mix of hearts and paws for COCO
+                // Randomly pick a heart or Coco's paw
+                h.innerHTML = Math.random() > 0.4 ? '💖' : '🐩'; 
                 h.style.left = Math.random() * 80 + 10 + 'vw';
                 h.style.top = '100vh';
                 document.body.appendChild(h);
-                h.animate([{top: '100vh'}, {top: '-10vh'}], {duration: 5000}).onfinish = () => h.remove();
-                h.onclick = () => { score++; document.getElementById('count').innerText = `${score} / 21`; h.remove(); };
-            }, 800);
+                
+                h.animate([{top: '100vh'}, {top: '-10vh'}], {
+                    duration: Math.random() * 2000 + 3000,
+                    easing: 'linear'
+                }).onfinish = () => h.remove();
+
+                const handleTap = () => { 
+                    score++; 
+                    document.getElementById('count').innerText = `${score} / 21`; 
+                    confetti({ particleCount: 10, spread: 30, origin: { x: 0.5, y: 0.5 } });
+                    h.remove(); 
+                };
+
+                h.onclick = handleTap;
+                h.ontouchstart = handleTap;
+            }, 700);
         }
 
         function showNotes() {
             const box = document.getElementById('msgBox');
             notes.forEach((m, i) => {
                 setTimeout(() => {
-                    box.innerHTML += `<p>✨ ${m}</p>`;
+                    const p = document.createElement('p');
+                    p.className = 'note-text';
+                    p.innerHTML = `✨ ${m}`;
+                    box.appendChild(p);
                     box.scrollTop = box.scrollHeight;
-                }, i * 3500); // 3.5s delay for 5-minute engagement
+                }, i * 3000); // Gradual reveal
             });
             confettiBlast();
         }
 
         function confettiBlast() {
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            const duration = 3 * 1000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+              confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 } });
+              confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 } });
+              if (Date.now() < end) requestAnimationFrame(frame);
+            }());
         }
     </script>
 </body>
